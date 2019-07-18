@@ -4,4 +4,15 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  !-- Turn off scripting in jsp-->
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <scripting-invalid>
+        true
+      </scripting-invalid>
+    </jsp-property-group>
+  </jsp-config>
+
 </web-app>
