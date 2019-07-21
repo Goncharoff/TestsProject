@@ -5,8 +5,16 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  !-- Turn off scripting in jsp-->
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/login.jsp</form-login-page>
+      <form-error-page>/login_error.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+
   <jsp-config>
+  !-- Turn off scripting in jsp-->
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>
       <scripting-invalid>
