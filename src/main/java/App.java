@@ -1,5 +1,3 @@
-import data.UserDB;
-import data.business.User;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.HostConfig;
 import org.apache.catalina.startup.Tomcat;

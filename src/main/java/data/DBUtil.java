@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+//TODO remove
 public class DBUtil {
 
     public static void closeStatement(Statement s) {
