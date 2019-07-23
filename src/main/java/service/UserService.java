@@ -9,7 +9,8 @@ public class UserService {
   private UserRepository repository = new UserRepositoryImpl();
 
   public User checkAndGetUser(String email, String password) {
-    return repository.selectUserByMailAndPass(email, password).orElseThrow(UserNotFoundException::new);
+    return repository.selectUserByMailAndPass(email, password)
+            .orElseThrow(UserNotFoundException::new);
   }
 
   public void registerUser(User user) {

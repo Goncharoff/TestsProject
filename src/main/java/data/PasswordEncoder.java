@@ -29,7 +29,7 @@ public class PasswordEncoder {
   public static boolean validatePassword(String originalPassword, String storedPassword) {
     String[] parts = storedPassword.split(":");
     int iterations = Integer.parseInt(parts[0]);
-    int diff;
+    int diff = -1;
 
     try {
       byte[] salt = fromHex(parts[1]);

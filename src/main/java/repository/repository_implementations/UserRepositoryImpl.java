@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import data.business.UserRole;
 import org.apache.commons.dbcp2.BasicDataSource;
 import repository.UserRepository;
 
@@ -34,7 +35,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> selectUserByMailAndPass(String email, String password) {
-        String query = "SELECT * FROM user WHERE user_email = ?";
+        String query = "SELECT user.user_id, user.user_email, user.user_name, user.user_surname, user.user_role, " +
+                "user_password, role_name as role, id_user_roles " +
+                "FROM user LEFT JOIN user_roles AS r ON user.user_role = r.id_user_roles  WHERE user.user_email = ?";
 
         try (BasicDataSource basicDataSource = ConnectionPool.getInstance().getDs();
              Connection connection = basicDataSource.getConnection();
@@ -42,7 +45,9 @@ public class UserRepositoryImpl implements UserRepository {
 
             rs.next();
 
-            if (!PasswordEncoder.validatePassword(password, rs.getString("user_password"))) {
+            boolean isPassCorrect = PasswordEncoder.validatePassword(password, rs.getString("user_password"));
+
+            if (isPassCorrect) {
                 throw new IllegalArgumentException("wrong pass =(");
             }
 
@@ -50,7 +55,9 @@ public class UserRepositoryImpl implements UserRepository {
                     .setUserEmail(rs.getString("user_email"))
                     .setUserName(rs.getString("user_name"))
                     .setUserSurname(rs.getString("user_surname"))
+                    .setUserRole(new UserRole(rs.getInt("id_user_roles"), rs.getString("role")))
                     .build();
+
 
             return Optional.of(resultUser);
 

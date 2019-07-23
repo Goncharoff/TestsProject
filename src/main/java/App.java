@@ -17,7 +17,7 @@ public class App {
         tomcat.getServer().addLifecycleListener(new VersionLoggerListener());
 
        // File war = new File("D:/Projects/TestsProject/target/TestsProject.war");
-         File war = new File("D:/Java Development/TestsProject/target/TestsProject.war");
+         File war = new File("D:/Projects/TestsProject/target/TestsProject.war");
 
         try {
             tomcat.addWebapp("", war.getAbsolutePath());

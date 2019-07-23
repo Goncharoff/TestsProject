@@ -6,7 +6,9 @@ public class UserRole implements Serializable {
     private long id;
     private String roleName;
 
-    public UserRole() {
+    public UserRole(long id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
     }
 
     public long getId() {
