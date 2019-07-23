@@ -22,7 +22,7 @@ public class User implements Serializable {
         this.userSurname = userSurname;
     }
 
-    public static class Builder {
+    public static class builder {
         private long id;
         private String userEmail;
         private String userPassword;
@@ -30,32 +30,32 @@ public class User implements Serializable {
         private String userName;
         private String userSurname;
 
-        public Builder setId(long id) {
+        public builder setId(long id) {
             this.id = id;
             return this;
         }
 
-        public Builder setUserEmail(String userEmail) {
+        public builder setUserEmail(String userEmail) {
             this.userEmail = userEmail;
             return this;
         }
 
-        public Builder setUserPassword(String userPassword) {
+        public builder setUserPassword(String userPassword) {
             this.userPassword = userPassword;
             return this;
         }
 
-        public Builder setUserName(String userName) {
+        public builder setUserName(String userName) {
             this.userName = userName;
             return this;
         }
 
-        public Builder setUserSurname(String userSurname) {
+        public builder setUserSurname(String userSurname) {
             this.userSurname = userSurname;
             return this;
         }
 
-        public Builder setUserRole(UserRole userRole) {
+        public builder setUserRole(UserRole userRole) {
             this.userRole = userRole;
             return this;
         }

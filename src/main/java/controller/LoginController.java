@@ -24,10 +24,10 @@ public class LoginController extends HttpServlet {
 
         User user = userService.checkAndGetUser(email, password);
 
+
         if (user != null) {
             if (user.getUserRole().getRoleName().equals("ADMIN"))
                 request.getRequestDispatcher("jsp/admin_info.jsp").forward(request, response);
-
             else request.getRequestDispatcher("jsp/user_info.jsp").forward(request, response);
         } else {
 

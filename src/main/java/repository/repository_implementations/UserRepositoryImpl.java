@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepository {
              Connection connection = basicDataSource.getConnection();
              PreparedStatement preparedStatement = getPSUpdateUserStatement(connection, user)) {
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
             //log
@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
                 throw new IllegalArgumentException("wrong pass =(");
             }
 
-            User resultUser = new User.Builder().setId(rs.getLong("user_id"))
+            User resultUser = new User.builder().setId(rs.getLong("user_id"))
                     .setUserEmail(rs.getString("user_email"))
                     .setUserName(rs.getString("user_name"))
                     .setUserSurname(rs.getString("user_surname"))

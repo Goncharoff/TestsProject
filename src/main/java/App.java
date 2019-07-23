@@ -12,7 +12,7 @@ public class App {
         File catalinaHome = new File("/tomcat.8090");
 
         Tomcat tomcat = new Tomcat();
-        tomcat.setPort(8090);
+        tomcat.setPort(9050);
         tomcat.setBaseDir(catalinaHome.getAbsolutePath());
         tomcat.getServer().addLifecycleListener(new VersionLoggerListener());
 
@@ -34,7 +34,7 @@ public class App {
         }
 
         tomcat.getServer().await();
-        // System.out.println(UserDB.selectUserMailAndPass("test@mail.com", "ohMyPassword"));
+
     }
 
 }
