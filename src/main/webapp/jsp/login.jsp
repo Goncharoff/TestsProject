@@ -5,30 +5,50 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-  <link type="text/css" rel="stylesheet" href=<c:url value="/styles/login_style.css" />
+  <link type="text/css" rel="stylesheet" href="/styles/login_style.css" />
+  <script type="text/javascript" src='/js/LoginForm.js'></script>
 </head>
 
+
+
 <body>
+
 
   <div class="login-page">
 
     <div class="form">
-      <form class="register-form">
-        <input type="text" placeholder="name" />
-        <input type="password" placeholder="password" />
-        <input type="text" placeholder="email address" />
+
+      <form method="POST" class="register-form" id="register-form" onsubmit="return registerFormValidator();" action="RegisterController">
+
+        <input type="text" placeholder="name" id="name_register" name = "name"/>
+        <div id="name_error" style="color: red"></div>
+
+        <input type="text" placeholder="surname" id="surname" name = "surname"/>
+        <div id="surname_error" style="color: red"></div>
+
+        <input type="text" placeholder="email address" id="email_register" name = "email"/>
+        <div id="email_error" style="color:red"></div>
+
+        <input type="password" placeholder="password" id="register_password" name = "password"/>
+        <div id="password_error" style="color: red"></div>
+
+        <input type="password" placeholder="repeat password" id="repeat_password" name="repeat_password">
+
         <button>create</button>
-        <p class="message">Already registered? <a href="#">Sign In</a></p>
+        <p class="message">Already registered? <a href="#" onclick="switchToLoginForm()">Login</a></p>
       </form>
 
-      <form method = "POST" class="login-form" action = "LoginController">
-        <input type="text" placeholder="email" id = "email" name = "email"/>
-        <input type="password" placeholder="password" id = "password" name = "password">
+      <form method="POST" class="login-form" action="LoginController" id="login-form">
+        <input type="text" placeholder="email" id="email" name="email" />
+        <input type="password" placeholder="password" id="password" name="password">
         <button>login</button>
-        <p class="message">Not registered? <a href="#">Create an account</a></p>
+        <p class="message">Not registered? <a href="#" onclick="switchToRegisterForm()">Create an account</a></p>
       </form>
+
     </div>
+
   </div>
+
 
 </body>
 

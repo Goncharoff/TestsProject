@@ -7,7 +7,7 @@
 
       <servlet>
         <servlet-name>Login form</servlet-name>
-        <jsp-file>/login.jsp</jsp-file>
+        <jsp-file>/jsp/login.jsp</jsp-file>
       </servlet>
 
       <servlet-mapping>
@@ -15,29 +15,21 @@
         <url-pattern>/login</url-pattern>
       </servlet-mapping>
 
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <form-login-config>
-            <form-login-page>/login</form-login-page>
-            <form-error-page>/login_error.jsp</form-error-page>
-        </form-login-config>
-    </login-config>
-
 
     <security-role>
         <role-name>ADMIN</role-name>
         <role-name>USER</role-name>
     </security-role>
 
-    <jsp-config>
-        !-- Turn off scripting in jsp-->
-        <jsp-property-group>
-            <url-pattern>*.jsp</url-pattern>
-            <scripting-invalid>
-                true
-            </scripting-invalid>
-            <url-pattern>*.xyz</url-pattern>
-        </jsp-property-group>
-    </jsp-config>
+<!--    <jsp-config>-->
+<!--        !&#45;&#45; Turn off scripting in jsp&ndash;&gt;-->
+<!--        <jsp-property-group>-->
+<!--            <url-pattern>*.jsp</url-pattern>-->
+<!--            <scripting-invalid>-->
+<!--                true-->
+<!--            </scripting-invalid>-->
+<!--            <url-pattern>*.xyz</url-pattern>-->
+<!--        </jsp-property-group>-->
+<!--    </jsp-config>-->
 
 </web-app>
