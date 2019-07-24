@@ -25,8 +25,6 @@ R
 "src/main/webapp/jsp/admin_info.jsp,9\1\91dc146ad0cf4889d3566567a101eb0b4c480e0a
 V
 &src/main/webapp/styles/login_style.css,6\4\64f38938d8c92cc5105892eb99fd249908ec957e
-N
-src/main/java/data/DBUtil.java,b\2\b2dcce09ba5cc48f62b4dc48c634f0a81a335c52
 V
 &src/main/java/data/ConnectionPool.java,4\5\453f186a34a37c33dcf0ad43c85f0c3c50f1d491
 ]
@@ -35,3 +33,11 @@ F
 src/main/java/App.java,6\7\67512e2f04487cca15d6699055f74a51de1a9eb4
 G
 src/scripts/scripts.sql,9\0\90d86bc239406a7bdab7f5751b08fa6b991bee97
+O
+src/main/webapp/js/LoginForm.js,e\5\e5e96ef55c920ef5537667aad84926bd5b34316c
+Y
+)src/main/java/data/business/UserRole.java,f\1\f1ba6bdada142612d8fdf0950d4482e64dc1a5dd
+]
+-src/main/java/controller/FrontController.java,4\7\47c74fa969ee9cc86f0233c9791e3cec49e33051
+`
+0src/main/java/controller/RegisterController.java,0\5\050d616b6f70735c45c9c218bd33fe0d92a30e1c

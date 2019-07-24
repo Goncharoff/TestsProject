@@ -18,7 +18,7 @@
 
     <div class="form">
 
-      <form method="POST" class="register-form" id="register-form" onsubmit="return registerFormValidator();" action="RegisterController">
+      <form method="POST" class="register-form" id="register-form" onsubmit="return registerFormValidator();" action = "/?command=Register">
 
         <input type="text" placeholder="name" id="name_register" name = "name"/>
         <div id="name_error" style="color: red"></div>
@@ -38,7 +38,7 @@
         <p class="message">Already registered? <a href="#" onclick="switchToLoginForm()">Login</a></p>
       </form>
 
-      <form method="POST" class="login-form" action="LoginController" id="login-form">
+      <form method="POST" class="login-form" action="/?command=Login" id="login-form">
         <input type="text" placeholder="email" id="email" name="email" />
         <input type="password" placeholder="password" id="password" name="password">
         <button>login</button>
