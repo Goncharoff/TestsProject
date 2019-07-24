@@ -14,9 +14,6 @@ public class LoginCommand extends FrontCommand {
 
   @Override
   public void process() throws ServletException, IOException {
-    logger.debug(request.getQueryString());
-    logger.debug(request.getCharacterEncoding());
-    System.out.println(request.getQueryString());
 
     String email = request.getParameter("email");
     String password = request.getParameter("password");
