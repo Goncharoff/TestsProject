@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-import org.apache.commons.dbcp2.BasicDataSource;
 import repository.UserRepository;
 
 public class UserRepositoryImpl implements UserRepository {

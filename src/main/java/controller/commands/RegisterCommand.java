@@ -14,6 +14,7 @@ public class RegisterCommand extends FrontCommand {
   @Override
   public void process() throws ServletException, IOException {
     userService.registerUser(buildUserFromInput(request));
+    forward("user_info");
   }
 
   private User buildUserFromInput(HttpServletRequest request) {
