@@ -31,3 +31,16 @@ INSERT INTO `tester_app_prod_db`.`user_roles`
 VALUES
 (2,
 'USER');
+
+ALTER TABLE `tester_app_prod_db`.`user`
+CHANGE COLUMN `user_role` `user_role` INT(11) NOT NULL DEFAULT 2 ;
+
+ALTER TABLE `tester_app_prod_db`.`user`
+ADD UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
+ADD UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE;
+;
+
+ALTER TABLE `tester_app_prod_db`.`user`
+CHANGE COLUMN `user_password` `user_password` VARCHAR(500) NOT NULL ;
+
+
