@@ -18,7 +18,7 @@
 
     <div class="form">
 
-      <form method="POST" class="register-form" id="register-form" onsubmit="return registerFormValidator();" action = "/?command=Register">
+      <form method="POST" class="register-form" id="register-form" action = "/?command=Register">
 
         <input type="text" placeholder="name" id="name_register" name = "name"/>
         <div id="name_error" style="color: red"></div>
@@ -34,11 +34,11 @@
 
         <input type="password" placeholder="repeat password" id="repeat_password" name="repeat_password">
 
-        <button>create</button>
+        <button onclick = "return registerFormValidator();">create</button>
         <p class="message">Already registered? <a href="#" onclick="switchToLoginForm()">Login</a></p>
       </form>
 
-      <form method="POST" class="login-form" action="/?command=Login" id="login-form">
+      <form   method="POST"  class="login-form" id="login-form" action = "/?command=Login">
         <input type="text" placeholder="email" id="email" name="email" />
         <input type="password" placeholder="password" id="password" name="password">
         <button>login</button>
@@ -46,9 +46,6 @@
       </form>
 
     </div>
-
-  </div>
-
 
 </body>
 

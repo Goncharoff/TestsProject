@@ -21,6 +21,13 @@
         <role-name>USER</role-name>
     </security-role>
 
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
 <!--    <jsp-config>-->
 <!--        !&#45;&#45; Turn off scripting in jsp&ndash;&gt;-->
 <!--        <jsp-property-group>-->

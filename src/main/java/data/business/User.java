@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 
 public class User implements Serializable {
+
     private long id;
     private final String userEmail;
     private final String userPassword;
     private UserRole userRole;
     private final String userName;
     private final String userSurname;
-    //TODO add tests MtM
+
 
 
     public User(long id, String userEmail, String userPassword, UserRole userRole, String userName, String userSurname) {

@@ -1,3 +1,4 @@
 
-msquid:S2068
-"V'PASSWORD' detected in this expression, review this potentially hard-coded credential.(ÓãÉ¼
+Xsquid:S22091"5Change this instance-reference to a static reference.(±Åí°üÿÿÿÿ8†Ô°šÂ-
+msquid:S2068"V'PASSWORD' detected in this expression, review this potentially hard-coded credential.(ÓãÉ¼
+Ysquid:S26961"6Make the enclosing method "static" or remove this set.(±Åí°üÿÿÿÿ8†Ô°šÂ-

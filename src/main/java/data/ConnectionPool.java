@@ -45,8 +45,4 @@ public class ConnectionPool {
     return ds.getConnection();
   }
 
-  public void setDs(BasicDataSource ds) {
-    this.ds = ds;
-  }
-
 }

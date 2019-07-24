@@ -7,4 +7,7 @@ public class UserNotFoundException extends RuntimeException {
     super("Can not find user with such credentials.");
   }
 
+  public UserNotFoundException(String message) {
+    super(message);
+  }
 }

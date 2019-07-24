@@ -8,9 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @WebServlet("/")
 public class FrontController extends HttpServlet {
+  final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +39,7 @@ public class FrontController extends HttpServlet {
 
       return (FrontCommand) type.asSubclass(FrontCommand.class).newInstance();
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.error(ex.getMessage());
       return new UnknownCommand();
     }
   }

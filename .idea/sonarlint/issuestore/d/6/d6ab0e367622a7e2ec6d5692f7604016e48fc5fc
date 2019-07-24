@@ -1,5 +1,4 @@
 
-rsquid:S2095A"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(â…ÍÆÿÿÿÿÿ8”ÄôÍÁ-
-Asquid:S1148"#Use a logger to log this exception.(Ç’Çê8­á¼ÌÁ-
-Asquid:S11489"#Use a logger to log this exception.(Ç’Çê8Å‹£ÍÁ-
-rsquid:S2095L"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(â…ÍÆÿÿÿÿÿ8âªµ÷Á-
+Asquid:S1148"#Use a logger to log this exception.(Ç’Çê8ºãÛ–Â-
+Asquid:S1148@"#Use a logger to log this exception.(Ç’Çê8ºãÛ–Â-
+Jsquid:S1172L",Remove this unused method parameter "query".(Ï€ø½8¬‡¥šÂ-

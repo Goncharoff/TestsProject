@@ -67,3 +67,19 @@ function clearRegisterErrors() {
    document.getElementById("surname_error").textContent = "";
 }
 
+function parseToJson() {
+var config = {};
+jQuery(document.getElementById("login-form")).serializeArray().map(function(item) {
+    if ( config[item.name] ) {
+        if ( typeof(config[item.name]) === "string" ) {
+            config[item.name] = [config[item.name]];
+        }
+        config[item.name].push(item.value);
+    } else {
+        config[item.name] = item.value;
+    }
+});
+alert(config);
+}
+
+
