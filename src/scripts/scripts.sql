@@ -42,3 +42,5 @@ ADD UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE;
 
 ALTER TABLE `tester_app_prod_db`.`user`
 CHANGE COLUMN `user_password` `user_password` VARCHAR(500) NOT NULL ;
+
+

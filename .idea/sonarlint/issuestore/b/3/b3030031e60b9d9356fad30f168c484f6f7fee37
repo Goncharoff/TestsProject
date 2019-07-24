@@ -1,0 +1,7 @@
+
+Vsquid:S1118
+":Add a private constructor to hide the implicit public one.(¸å¶éüÿÿÿÿ
+]squid:S3457J"AFormat specifiers should be used instead of string concatenation.(¾ì¦¤ıÿÿÿÿ
+°%squid:RedundantThrowsDeclarationCheckE"Remove the declaration of thrown exception 'java.security.NoSuchAlgorithmException', as it cannot be thrown from method's body.(ŸØ‹æ
+Usquid:S1135/"2Complete the task associated to this TODO comment.(‡ÕÑøÿÿÿÿ8æŞîÍÁ-
+µ%squid:RedundantThrowsDeclarationCheck="Remove the declaration of thrown exception 'java.security.NoSuchAlgorithmException', as it cannot be thrown from method's body.(ñÅ½Ğûÿÿÿÿ
