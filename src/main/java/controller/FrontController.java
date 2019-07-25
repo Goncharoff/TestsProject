@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebServlet("/")
+@WebServlet("/home")
 public class FrontController extends HttpServlet {
   final Logger logger = LoggerFactory.getLogger(this.getClass());
 

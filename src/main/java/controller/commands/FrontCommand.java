@@ -29,4 +29,11 @@ public abstract class FrontCommand {
     RequestDispatcher dispatcher = context.getRequestDispatcher(target);
     dispatcher.forward(request, response);
   }
+
+  protected void  redirect(String target) throws ServletException, IOException{
+    target = String.format("/jsp/%s.jsp", target);
+    response.sendRedirect(target);
+  }
+
+
 }

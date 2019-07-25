@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+
 public class ConnectionPool {
   private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
   private static final String DB_URL = "jdbc:mysql://localhost:3306/tester_app_prod_db?serverTimezone=UTC";

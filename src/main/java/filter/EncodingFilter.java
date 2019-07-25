@@ -17,7 +17,7 @@ public class EncodingFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     this.encoding = filterConfig.getInitParameter("encoding");
-    if (encoding == null) encoding = "UTF-8";
+   if (encoding == null) encoding = "UTF-8";
   }
 
   @Override
