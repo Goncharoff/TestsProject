@@ -29,8 +29,8 @@ function registerFormValidator() {
    var emailError = document.getElementById("email_error");
    var passwordError = document.getElementById("password_error");
    var surnameError = document.getElementById("surname_error");
-   
-    
+
+
    if (name.length == 0 || name.length >= 50) {
       nameError.textContent = "Name is required and should have less then 51 chars.";
       return false;
@@ -81,5 +81,3 @@ jQuery(document.getElementById("login-form")).serializeArray().map(function(item
 });
 alert(config);
 }
-
-

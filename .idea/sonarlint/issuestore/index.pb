@@ -57,3 +57,5 @@ c
 3src/main/java/controller/commands/LoginCommand.java,1\f\1f91f3d92e01942ec2041464f143a7cdf2cf2073
 B
 ${basePath}app.log,f\6\f65003965ee7f670b605770477d237c409f21677
+Z
+*src/main/java/data/quires/UserQueries.java,9\7\972a9641eee4230ac10695ca43bc42f572f60bf7
