@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import repository.repository_implementations.UserRepositoryImpl;
 import service.UserService;
 
 public class LoginCommand extends FrontCommand {
@@ -14,6 +15,11 @@ public class LoginCommand extends FrontCommand {
 
   @Override
   public void process() throws ServletException, IOException {
+
+    UserRepositoryImpl userRepository = new UserRepositoryImpl();
+
+    logger.info("This is what happens now");
+    logger.info(userRepository.selectUserAndStatistic(1).get().toString());
 
     String email = request.getParameter("email");
     String password = request.getParameter("password");

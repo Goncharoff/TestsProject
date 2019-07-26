@@ -4,11 +4,14 @@ import data.ConnectionPool;
 import data.PasswordEncoder;
 import data.business.User;
 import data.business.UserRole;
+import data.business.UserStatistic;
 import data.quires.UserQueries;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +66,54 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     return Optional.empty();
+  }
+
+  @Override
+  public Optional<User> selectUserAndStatistic(long id) {
+    try (Connection connection = ConnectionPool.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(UserQueries.SELECT_USER_AND_STATISTIC_BY_USER_ID.getQUERY());
+         ResultSet rs = getPSForUserStatistic(preparedStatement, id).executeQuery()) {
+      List<UserStatistic> result = new ArrayList<>();
+
+      Long userId = null;
+      String email = null;
+      String userName = null;
+      String surname = null;
+
+      while (rs.next()) {
+        userId = rs.getLong("user_id");
+        email = rs.getString("user_email");
+        userName = rs.getString("user_name");
+        surname = rs.getString("user_surname");
+        result.add(new UserStatistic.builder()
+                .setId(rs.getLong("user_statistic_id"))
+                .setTestName(rs.getString("test_name"))
+                .setPassedAnswers(rs.getInt("all_questions_passed"))
+                .setCorrectAnswers(rs.getInt("correct_answered"))
+                .setDateRecorded(rs.getDate("date_recorded"))
+                .build()
+        );
+      }
+
+      User resultUser = new User.builder().setId(userId)
+              .setUserEmail(email)
+              .setUserName(userName)
+              .setUserSurname(surname)
+              .setUserStatistic(result)
+              .build();
+
+      return Optional.of(resultUser);
+
+    } catch (SQLException ex) {
+      logger.error("Error during fetching user with statistic: ", ex);
+    }
+
+    return Optional.empty();
+  }
+
+  private PreparedStatement getPSForUserStatistic(PreparedStatement preparedStatement, long id) throws SQLException {
+    preparedStatement.setLong(1, id);
+    return preparedStatement;
   }
 
   private PreparedStatement getPSForUserByEmail(PreparedStatement preparedStatement, String email) throws SQLException {

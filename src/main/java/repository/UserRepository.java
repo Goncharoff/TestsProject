@@ -8,4 +8,6 @@ public interface UserRepository {
   void registerUser(User user);
 
   Optional<User> selectUserByMailAndPass(String email, String password);
+
+  Optional<User> selectUserAndStatistic(long id);
 }

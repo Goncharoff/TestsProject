@@ -3,6 +3,8 @@ package data.business;
 import java.io.Serializable;
 
 public class UserRole implements Serializable {
+    private static final long serialVersionUID = -7082656882270827005L;
+
     private long id;
     private String roleName;
 

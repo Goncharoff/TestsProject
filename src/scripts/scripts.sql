@@ -168,7 +168,11 @@ ADD COLUMN `test_items_id` INT NOT NULL AFTER `type_id`;
 
 ALTER TABLE questions ADD FOREIGN KEY (`test_items_id`) REFERENCES test_items(`test_item_id`);
 
+ALTER TABLE `tester_app_prod_db`.`user_statistic`
+CHANGE COLUMN `date_recordet` `date_recordet` DATE NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP ;
 
+ALTER TABLE `tester_app_prod_db`.`user_statistic`
+CHANGE COLUMN `date_recordet` `date_recorded` DATE NOT NULL ;
 
 
 
