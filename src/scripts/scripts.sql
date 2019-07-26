@@ -123,7 +123,7 @@ RENAME TO  `tester_app_prod_db`.`languages` ;
 ALTER TABLE `tester_app_prod_db`.`type_question`
 RENAME TO  `tester_app_prod_db`.`type_questions` ;
 
-ALTER TABLE `tester_app_prod_db`.`questions`
+ALTER TABLE `tester_app_prod_db`.`question`
 RENAME TO  `tester_app_prod_db`.`questions` ;
 
 ALTER TABLE `tester_app_prod_db`.`test_item`
@@ -134,6 +134,45 @@ RENAME TO  `tester_app_prod_db`.`users` ;
 
 ALTER TABLE `tester_app_prod_db`.`user_have_test`
 RENAME TO  `tester_app_prod_db`.`user_have_tests` ;
+
+ALTER TABLE user_have_tests ADD FOREIGN KEY (`user_id`) REFERENCES users(`user_id`);
+
+ALTER TABLE `tester_app_prod_db`.`users`
+DROP COLUMN `user_have_tests_id`;
+
+ALTER TABLE users ADD FOREIGN KEY (`user_role`) REFERENCES user_roles(`id_user_roles`);
+
+ALTER TABLE user_have_tests ADD FOREIGN KEY (`test_id`) REFERENCES test_items(`test_item_id`);
+
+ALTER TABLE test_items ADD FOREIGN KEY (`language_id`) REFERENCES languages(`language_id`);
+
+ALTER TABLE questions ADD FOREIGN KEY (`question_id`) REFERENCES questions(`question_id`);
+
+ALTER TABLE questions ADD FOREIGN KEY (`type_id`) REFERENCES type_questions(`type_id`);
+
+ALTER TABLE `tester_app_prod_db`.`questions`
+DROP FOREIGN KEY `questions_ibfk_1`;
+
+ALTER TABLE answers ADD FOREIGN KEY (`question_id`) REFERENCES questions(`question_id`);
+
+ALTER TABLE `tester_app_prod_db`.`user_statistic`
+ADD COLUMN `user_id` INT NOT NULL AFTER `date_recordet`;
+
+ALTER TABLE user_statistic ADD FOREIGN KEY (`user_id`) REFERENCES users(`user_id`);
+
+ALTER TABLE `tester_app_prod_db`.`test_items`
+DROP COLUMN `question_id`;
+
+ALTER TABLE `tester_app_prod_db`.`questions`
+ADD COLUMN `test_items_id` INT NOT NULL AFTER `type_id`;
+
+ALTER TABLE questions ADD FOREIGN KEY (`test_items_id`) REFERENCES test_items(`test_item_id`);
+
+
+
+
+
+
 
 
 
