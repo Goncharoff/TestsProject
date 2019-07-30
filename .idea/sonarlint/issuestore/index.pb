@@ -59,3 +59,7 @@ B
 ${basePath}app.log,f\6\f65003965ee7f670b605770477d237c409f21677
 Z
 *src/main/java/data/quires/UserQueries.java,9\7\972a9641eee4230ac10695ca43bc42f572f60bf7
+N
+src/main/webapp/jsp/index.html,e\d\ed33b66993c49eddb3a52941dbef96145ae24b0b
+^
+.src/main/java/data/business/UserStatistic.java,6\5\655ee90fde36b2791af291d2c3ff7af3d6750bba
