@@ -1,13 +1,15 @@
+import java.io.File;
+import javax.servlet.ServletException;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.HostConfig;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.startup.VersionLoggerListener;
-
-import javax.servlet.ServletException;
-import java.io.File;
-import repository.repository_implementations.UserRepositoryImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import service.UserStatisticService;
 
 public class App {
+  private static final Logger logger = LoggerFactory.getLogger(App.class);
 
   public static void main(String[] args) {
     File catalinaHome = new File("/tomcat.8090");
@@ -35,8 +37,6 @@ public class App {
     }
 
     tomcat.getServer().await();
-
-
 
   }
 

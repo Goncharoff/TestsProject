@@ -1,7 +1,9 @@
 package data.business;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class User implements Serializable {
@@ -14,8 +16,8 @@ public class User implements Serializable {
   private final UserRole userRole;
   private final String userName;
   private final String userSurname;
-  private final List<UserStatistic> userStatistics;
-
+  private List<UserStatistic> userStatistics;
+  private List<TestItem> testItems;
 
   public User(long id, String userEmail, String userPassword, UserRole userRole, String userName, String userSurname, List<UserStatistic> userStatistics) {
     this.id = id;
@@ -34,7 +36,7 @@ public class User implements Serializable {
     private UserRole userRole;
     private String userName;
     private String userSurname;
-    private List<UserStatistic> userStatistics;
+    private List<UserStatistic> userStatistics = new ArrayList<>();
 
     public builder setId(long id) {
       this.id = id;
@@ -103,6 +105,30 @@ public class User implements Serializable {
 
   public String getUserSurname() {
     return userSurname;
+  }
+
+  public List<UserStatistic> getUserStatistics() {
+    return userStatistics;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof User)) return false;
+    User user = (User) o;
+    return getId() == user.getId() &&
+            Objects.equals(getUserEmail(), user.getUserEmail()) &&
+            Objects.equals(getUserPassword(), user.getUserPassword()) &&
+            Objects.equals(getUserRole(), user.getUserRole()) &&
+            Objects.equals(getUserName(), user.getUserName()) &&
+            Objects.equals(getUserSurname(), user.getUserSurname()) &&
+            Objects.equals(getUserStatistics(), user.getUserStatistics()) &&
+            Objects.equals(testItems, user.testItems);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getUserEmail(), getUserPassword(), getUserRole(), getUserName(), getUserSurname(), getUserStatistics(), testItems);
   }
 
   @Override

@@ -11,12 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.UserRepository;
 import utils.UserNotFoundException;
+
 
 public class UserRepositoryImpl implements UserRepository {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -73,42 +76,65 @@ public class UserRepositoryImpl implements UserRepository {
     try (Connection connection = ConnectionPool.getConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(UserQueries.SELECT_USER_AND_STATISTIC_BY_USER_ID.getQUERY());
          ResultSet rs = getPSForUserStatistic(preparedStatement, id).executeQuery()) {
-      List<UserStatistic> result = new ArrayList<>();
 
-      Long userId = null;
-      String email = null;
-      String userName = null;
-      String surname = null;
+      User.builder userBuilder = new User.builder();
+      Map<Long, UserStatistic> statisticResultMap = new HashMap<>();
 
       while (rs.next()) {
-        userId = rs.getLong("user_id");
-        email = rs.getString("user_email");
-        userName = rs.getString("user_name");
-        surname = rs.getString("user_surname");
-        result.add(new UserStatistic.builder()
-                .setId(rs.getLong("user_statistic_id"))
-                .setTestName(rs.getString("test_name"))
-                .setPassedAnswers(rs.getInt("all_questions_passed"))
-                .setCorrectAnswers(rs.getInt("correct_answered"))
-                .setDateRecorded(rs.getDate("date_recorded"))
-                .build()
-        );
+        long userId = rs.getLong("user_id");
+
+        userBuilder.setId(userId)
+                .setUserEmail(rs.getString("user_email"))
+                .setUserName(rs.getString("user_name"))
+                .setUserSurname(rs.getString("user_surname"));
+
+        UserStatistic statistic = statisticResultMap.get(userId);
+
+        if (statistic == null) {
+          UserStatistic userStatistic = new UserStatistic.builder()
+                  .setId(rs.getLong("user_statistic_id"))
+                  .setTestName(rs.getString("test_name"))
+                  .setPassedAnswers(rs.getInt("all_questions_passed"))
+                  .setCorrectAnswers(rs.getInt("correct_answered"))
+                  .setDateRecorded(rs.getDate("date_recorded"))
+                  .setUserId(rs.getInt("user_id"))
+                  .build();
+
+          statisticResultMap.put(id, userStatistic);
+        }
+
       }
 
-      User resultUser = new User.builder().setId(userId)
-              .setUserEmail(email)
-              .setUserName(userName)
-              .setUserSurname(surname)
-              .setUserStatistic(result)
-              .build();
+      userBuilder.setUserStatistic(new ArrayList<>(statisticResultMap.values()));
 
-      return Optional.of(resultUser);
+      return Optional.ofNullable(userBuilder.build());
 
     } catch (SQLException ex) {
       logger.error("Error during fetching user with statistic: ", ex);
     }
 
     return Optional.empty();
+  }
+
+  @Override
+  public List<User> selectAllUsersWithStatistic() {
+    List<User> resultSet = new ArrayList<>();
+
+    try (Connection connection = ConnectionPool.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(UserQueries.SELECT_ALL_USERS_WITH_STATISTIC.getQUERY());
+         ResultSet rs = preparedStatement.executeQuery()) {
+      while (rs.next()) {
+        long userId = rs.getInt("user_id");
+
+        selectUserAndStatistic(userId).ifPresent(resultSet::add);
+
+      }
+
+    } catch (SQLException ex) {
+      logger.error("Errors during getting all users statistic");
+    }
+
+    return resultSet;
   }
 
   private PreparedStatement getPSForUserStatistic(PreparedStatement preparedStatement, long id) throws SQLException {
@@ -122,7 +148,6 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   private PreparedStatement getPSUpdateUserStatement(PreparedStatement preparedStatement, User user) throws SQLException {
-
     preparedStatement.setString(1, user.getUserEmail());
     preparedStatement.setString(2, PasswordEncoder.generatePasswordHash(user.getUserPassword()));
     preparedStatement.setString(3, user.getUserName());
