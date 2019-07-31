@@ -83,29 +83,29 @@ public class UserRepositoryImpl implements UserRepository {
       while (rs.next()) {
         long userId = rs.getLong("user_id");
 
-        userBuilder.setId(userId)
-                .setUserEmail(rs.getString("user_email"))
-                .setUserName(rs.getString("user_name"))
-                .setUserSurname(rs.getString("user_surname"));
+      userBuilder.setId(userId)
+              .setUserEmail(rs.getString("user_email"))
+              .setUserName(rs.getString("user_name"))
+              .setUserSurname(rs.getString("user_surname"));
 
-        UserStatistic statistic = statisticResultMap.get(userId);
+      UserStatistic statistic = statisticResultMap.get(userId);
 
-        if (statistic == null) {
-          UserStatistic userStatistic = new UserStatistic.builder()
-                  .setId(rs.getLong("user_statistic_id"))
-                  .setTestName(rs.getString("test_name"))
-                  .setPassedAnswers(rs.getInt("all_questions_passed"))
-                  .setCorrectAnswers(rs.getInt("correct_answered"))
-                  .setDateRecorded(rs.getDate("date_recorded"))
-                  .setUserId(rs.getInt("user_id"))
-                  .build();
+      if (statistic == null) {
+        UserStatistic userStatistic = new UserStatistic.builder()
+                .setId(rs.getLong("user_statistic_id"))
+                .setTestName(rs.getString("test_name"))
+                .setPassedAnswers(rs.getInt("all_questions_passed"))
+                .setCorrectAnswers(rs.getInt("correct_answered"))
+                .setDateRecorded(rs.getDate("date_recorded"))
+                .setUserId(rs.getInt("user_id"))
+                .build();
 
-          statisticResultMap.put(id, userStatistic);
-        }
-
+        statisticResultMap.put(id, userStatistic);
       }
 
-      userBuilder.setUserStatistic(new ArrayList<>(statisticResultMap.values()));
+    }
+
+        userBuilder.setUserStatistic(new ArrayList<>(statisticResultMap.values()));
 
       return Optional.ofNullable(userBuilder.build());
 

@@ -1,22 +1,75 @@
 package data.business;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Question {
-  private int id;
-  private String text;
-  private String url;
-  private int typeId;
-  private int restItemsId;
-  private TypeQuestion questionType;
+  private final int id;
+  private final String text;
+  private final String url;
+  private final int typeId;
+  private final int testItemId;
+  private final TypeQuestion questionType;
+  private List<Answer> answers;
 
-  public Question(int id, String text, String url, int typeId, int restItemsId, TypeQuestion questionType) {
+  public Question(int id, String text, String url, int typeId, int testItemId, TypeQuestion questionType, List<Answer> answers) {
     this.id = id;
     this.text = text;
     this.url = url;
     this.typeId = typeId;
-    this.restItemsId = restItemsId;
+    this.testItemId = testItemId;
     this.questionType = questionType;
+    this.answers = answers;
+  }
+
+  public static class builder {
+    private int id;
+    private String text;
+    private String url;
+    private int typeId;
+    private int testItemId;
+    private TypeQuestion questionType;
+    private List<Answer> answers = new ArrayList<>();
+
+    public builder setId(int id) {
+      this.id = id;
+      return this;
+    }
+
+    public builder setText(String text) {
+      this.text = text;
+      return this;
+    }
+
+    public builder setUrl(String url) {
+      this.url = url;
+      return this;
+    }
+
+    public builder setTypeId(int typeId) {
+      this.typeId = typeId;
+      return this;
+    }
+
+    public builder setTestItemId(int testItemId) {
+      this.testItemId = testItemId;
+      return this;
+    }
+
+    public builder setTypeQuestion(TypeQuestion typeQuestion) {
+      this.questionType = typeQuestion;
+      return this;
+    }
+
+    public builder setAnswers(List<Answer> answers) {
+      this.answers = answers;
+      return this;
+    }
+
+    public Question build() {
+      return new Question(id, text, url, typeId, testItemId, questionType, answers);
+    }
   }
 
   public int getId() {
@@ -35,36 +88,20 @@ public class Question {
     return typeId;
   }
 
-  public int getRestItemsId() {
-    return restItemsId;
+  public int getTestItemId() {
+    return testItemId;
   }
 
   public TypeQuestion getQuestionType() {
     return questionType;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public List<Answer> getAnswers() {
+    return answers;
   }
 
-  public void setText(String text) {
-    this.text = text;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public void setTypeId(int typeId) {
-    this.typeId = typeId;
-  }
-
-  public void setRestItemsId(int restItemsId) {
-    this.restItemsId = restItemsId;
-  }
-
-  public void setQuestionType(TypeQuestion questionType) {
-    this.questionType = questionType;
+  public void setAnswers(List<Answer> answers) {
+    this.answers = answers;
   }
 
   @Override
@@ -74,7 +111,7 @@ public class Question {
     Question question = (Question) o;
     return getId() == question.getId() &&
             getTypeId() == question.getTypeId() &&
-            getRestItemsId() == question.getRestItemsId() &&
+            getTestItemId() == question.getTestItemId() &&
             Objects.equals(getText(), question.getText()) &&
             Objects.equals(getUrl(), question.getUrl()) &&
             Objects.equals(getQuestionType(), question.getQuestionType());
@@ -82,7 +119,7 @@ public class Question {
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getText(), getUrl(), getTypeId(), getRestItemsId(), getQuestionType());
+    return Objects.hash(getId(), getText(), getUrl(), getTypeId(), getTestItemId(), getQuestionType());
   }
 
   @Override
@@ -92,7 +129,7 @@ public class Question {
             ", text='" + text + '\'' +
             ", url='" + url + '\'' +
             ", typeId=" + typeId +
-            ", restItemsId=" + restItemsId +
+            ", restItemsId=" + testItemId +
             ", questionType=" + questionType +
             '}';
   }
