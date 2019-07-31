@@ -1,6 +1,5 @@
 package service;
 
-import data.business.User;
 import data.business.UserStatistic;
 import java.util.List;
 import repository.UserStatisticRepository;

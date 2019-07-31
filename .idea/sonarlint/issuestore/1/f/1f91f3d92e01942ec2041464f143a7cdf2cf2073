@@ -1,4 +1,3 @@
 
-Gsquid:S2629"$Invoke method(s) only conditionally.(¿¢’ÿÿÿÿÿÿ8ÙˆÆòÂ-
-Hsquid:S00108 ")Either remove or fill this block of code.(å¥ž‡8ñó·˜Â-
-Zsquid:S3655"7Call "Optional#isPresent()" before accessing the value.(¿¢’ÿÿÿÿÿÿ8ÙˆÆòÂ-
+_squid:S3457"AFormat specifiers should be used instead of string concatenation.(¹Ð¡¿8¾’å™Ä-
+zsquid:S2629"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(¹Ð¡¿8¾’å™Ä-

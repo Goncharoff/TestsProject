@@ -174,6 +174,17 @@ CHANGE COLUMN `date_recordet` `date_recordet` DATE NOT NULL DEFAULT DEFAULT CURR
 ALTER TABLE `tester_app_prod_db`.`user_statistic`
 CHANGE COLUMN `date_recordet` `date_recorded` DATE NOT NULL ;
 
+ALTER TABLE `tester_app_prod_db`.`test_items`
+DROP FOREIGN KEY `test_items_ibfk_1`;
+ALTER TABLE `tester_app_prod_db`.`test_items`
+DROP INDEX `language_id` ;
+;
+
+ALTER TABLE `tester_app_prod_db`.`test_items`
+CHANGE COLUMN `duration` `duration` BIGINT(150) NOT NULL ;
+
+
+
 
 
 

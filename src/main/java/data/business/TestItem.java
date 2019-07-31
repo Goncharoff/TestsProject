@@ -116,7 +116,7 @@ public class TestItem {
 
   @Override
   public String toString() {
-    return "TestItem{" +
+    return "TestItemQueries{" +
             "testItemId=" + testItemId +
             ", languageId=" + languageId +
             ", name='" + name + '\'' +
