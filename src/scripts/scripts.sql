@@ -183,9 +183,36 @@ DROP INDEX `language_id` ;
 ALTER TABLE `tester_app_prod_db`.`test_items`
 CHANGE COLUMN `duration` `duration` BIGINT(150) NOT NULL ;
 
+INSERT INTO `tester_app_prod_db`.`type_questions`
+(`type_id`,
+`type_name`)
+VALUES
+(1,
+'one');
+SELECT * FROM tester_app_prod_db.type_questions;
+
+INSERT INTO `tester_app_prod_db`.`type_questions`
+(`type_id`,
+`type_name`)
+VALUES
+(2,
+'multy');
+SELECT * FROM tester_app_prod_db.type_questions;
 
 
-
+INSERT INTO `tester_app_prod_db`.`questions`
+(`question_id`,
+`question_text`,
+`question_image_url`,
+`type_id`,
+`test_items_id`)
+VALUES
+(1,
+'1 quest',
+'some url',
+'1',
+'1');
+SELECT * FROM tester_app_prod_db.questions;
 
 
 
