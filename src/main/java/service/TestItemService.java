@@ -12,4 +12,7 @@ public class TestItemService {
     return testItemRepository.getAllTestItems();
   }
 
+  public List<TestItem> getAllTestItemsWithPagination(int pageNumber, int pageSize) {
+    return testItemRepository.getPagingTestItems(pageNumber, pageSize);
+  }
 }
