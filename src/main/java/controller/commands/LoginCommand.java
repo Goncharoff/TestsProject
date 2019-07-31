@@ -13,7 +13,6 @@ public class LoginCommand extends FrontCommand {
 
   @Override
   public void process() throws ServletException, IOException {
-    logger.info("so all : " + userService.selectAllUsersWithStatistic());
 
     String email = request.getParameter("email");
     String password = request.getParameter("password");
