@@ -48,8 +48,7 @@ public abstract class FrontCommand implements OnIntercept {
   }
 
   void redirect(String target) throws ServletException, IOException {
-    logger.info("context path = " + request.getContextPath());
-    logger.info("target = " + target);
+    logger.info(String.format("Redirecting from %1$s to %2$s", context.getContextPath(), request.getContextPath()));
     response.sendRedirect(request.getContextPath() + target);
   }
 

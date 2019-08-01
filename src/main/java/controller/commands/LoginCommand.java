@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import service.ServiceFactory;
 import service.UserService;
 
-class LoginCommand extends FrontCommand {
+public class LoginCommand extends FrontCommand {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
   private UserService userService = ServiceFactory.getUserService();
 
@@ -25,8 +25,9 @@ class LoginCommand extends FrontCommand {
     if (user != null) {
       session.setAttribute("username", user.getId());
 
-      if (user.getUserRole().getRoleName().equals("ADMIN")) forward("admin_info");
-      else redirect("user_info");
+      if (user.getUserRole().getRoleName().equals("ADMIN")) redirect("/admin_info");
+      else redirect("/user_info");
+
     } else {
       logger.error("Can not find user with email = {}", email);
     }

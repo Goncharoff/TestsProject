@@ -17,7 +17,7 @@
 
     <servlet>
         <servlet-name>User info</servlet-name>
-        <jsp-file>/jsp/user_info.jsp</jsp-file>
+        <jsp-file>/jsp/secured/user_info.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
