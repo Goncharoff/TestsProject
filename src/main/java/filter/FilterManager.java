@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 public class FilterManager {
   public static void process(HttpServletRequest request,
                              HttpServletResponse response, OnIntercept callback) throws IOException, ServletException {
+
     FilterChain filterChain = new FilterChainImpl(
-            new SecurityFilter(callback),
-            new VisitorCounterFilter()
+            new SecurityFilter(callback)
     );
+
     filterChain.doFilter(request, response);
   }
 }

@@ -25,7 +25,7 @@ public class LoginCommand extends FrontCommand {
       session.setAttribute("username", user.getId());
 
       if (user.getUserRole().getRoleName().equals("ADMIN")) forward("admin_info");
-      else forward("user_info");
+      else redirect("user_info");
     } else {
       logger.error("Can not find user with email = {}", email);
     }
