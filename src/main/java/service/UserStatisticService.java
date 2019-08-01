@@ -2,13 +2,13 @@ package service;
 
 import data.business.UserStatistic;
 import java.util.List;
+import repository.RepositoryFactory;
 import repository.UserStatisticRepository;
-import repository.repository_implementations.UserStatisticRepositoryImpl;
 import utils.SqlOperationsException;
 
 //TODO custom exception
 public class UserStatisticService {
-  private UserStatisticRepository userStatisticRepository = new UserStatisticRepositoryImpl();
+  private UserStatisticRepository userStatisticRepository = RepositoryFactory.getUserStatisticRepository();
 
   public List<UserStatistic> getByUserId(long id) {
     return userStatisticRepository.selectUserStatisticByUserId(id).orElseThrow(SqlOperationsException::new);

@@ -2,11 +2,11 @@ package service;
 
 import data.business.TestItem;
 import java.util.List;
+import repository.RepositoryFactory;
 import repository.TestItemRepository;
-import repository.repository_implementations.TestItemRepositoryImpl;
 
-public class TestItemService {
-  private TestItemRepository testItemRepository = new TestItemRepositoryImpl();
+ class TestItemService {
+  private TestItemRepository testItemRepository = RepositoryFactory.getTestItemRepository();
 
   public List<TestItem> getAllTestItems() {
     return testItemRepository.getAllTestItems();
