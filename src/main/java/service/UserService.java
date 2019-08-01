@@ -3,7 +3,7 @@ package service;
 import data.business.User;
 import java.util.List;
 import repository.UserRepository;
-import repository.repository_implementations.UserRepositoryImpl;
+import repository.implementation.UserRepositoryImpl;
 import utils.UserNotFoundException;
 
 public class UserService {
