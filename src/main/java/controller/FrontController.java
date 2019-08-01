@@ -1,7 +1,7 @@
 package controller;
 
+import controller.commands.CommandFactory;
 import controller.commands.FrontCommand;
-import controller.commands.UnknownCommand;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 @WebServlet("/")
 public class FrontController extends HttpServlet {
-  final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class FrontController extends HttpServlet {
       return (FrontCommand) type.asSubclass(FrontCommand.class).newInstance();
     } catch (Exception ex) {
       logger.error(ex.getMessage());
-      return new UnknownCommand();
+      return CommandFactory.getUnknownCommand();
     }
   }
 

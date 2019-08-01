@@ -5,11 +5,12 @@ import data.business.UserRole;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import service.ServiceFactory;
 import service.UserService;
 
-public class RegisterCommand extends FrontCommand {
+class RegisterCommand extends FrontCommand {
 
-  UserService userService = new UserService();
+  UserService userService = ServiceFactory.getUserService();
 
   @Override
   public void process() throws ServletException, IOException {

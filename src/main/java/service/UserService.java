@@ -2,12 +2,12 @@ package service;
 
 import data.business.User;
 import java.util.List;
+import repository.RepositoryFactory;
 import repository.UserRepository;
-import repository.repository_implementations.UserRepositoryImpl;
 import utils.UserNotFoundException;
 
 public class UserService {
-  private UserRepository repository = new UserRepositoryImpl();
+  private UserRepository repository = RepositoryFactory.getUserRepository();
 
   public User checkAndGetUser(String email, String password) {
     return repository.selectUserByMailAndPass(email, password)

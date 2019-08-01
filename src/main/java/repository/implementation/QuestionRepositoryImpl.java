@@ -1,4 +1,4 @@
-package repository.repository_implementations;
+package repository.implementation;
 
 import data.ConnectionPool;
 import data.business.Answer;
@@ -20,6 +20,7 @@ import repository.QuestionRepository;
 
 public class QuestionRepositoryImpl implements QuestionRepository {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
   @Override
   public List<Question> getQuestionsByTestItemId(long id) {

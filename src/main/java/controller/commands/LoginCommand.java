@@ -6,11 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.ServiceFactory;
 import service.UserService;
 
-public class LoginCommand extends FrontCommand {
+class LoginCommand extends FrontCommand {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
-  private UserService userService = new UserService();
+  private UserService userService = ServiceFactory.getUserService();
 
   @Override
   public void process() throws ServletException, IOException {
