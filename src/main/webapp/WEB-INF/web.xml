@@ -15,6 +15,16 @@
         <url-pattern>/login</url-pattern>
       </servlet-mapping>
 
+    <servlet>
+        <servlet-name>User info</servlet-name>
+        <jsp-file>/jsp/user_info.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>User info</servlet-name>
+        <url-pattern>/user_info</url-pattern>
+    </servlet-mapping>
+
 
     <security-role>
         <role-name>ADMIN</role-name>
