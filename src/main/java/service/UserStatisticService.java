@@ -4,7 +4,6 @@ import data.business.UserStatistic;
 import java.util.List;
 import repository.RepositoryFactory;
 import repository.UserStatisticRepository;
-import repository.implementation.UserStatisticRepositoryImpl;
 import utils.SqlOperationsException;
 
 //TODO custom exception
