@@ -13,10 +13,6 @@ V
 &src/main/java/service/UserService.java,f\2\f2bf6a3d9f14ae9a85e78a6ec1a3f81261e3329c
 O
 src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
-Q
-!src/main/webapp/jsp/user_info.jsp,7\4\74f01b6c205953cea63893ffe3c315368236c67c
-R
-"src/main/webapp/jsp/admin_info.jsp,9\1\91dc146ad0cf4889d3566567a101eb0b4c480e0a
 V
 &src/main/webapp/styles/login_style.css,6\4\64f38938d8c92cc5105892eb99fd249908ec957e
 V
@@ -91,3 +87,7 @@ Z
 *src/main/java/service/TestItemService.java,4\a\4a2e5d4a03040c594f3b3a5a850355c477ff94c6
 e
 5src/main/java/controller/commands/CommandFactory.java,7\1\712f4298ec93ba932283b2297f8ee32cd3070a85
+Y
+)src/main/webapp/jsp/secured/user_info.jsp,1\f\1f070310dfa5dd9acc3fbfa6c942509ce6bf0906
+Z
+*src/main/webapp/jsp/secured/admin_info.jsp,d\7\d77a2a7c8965c90b29b3ff0085e48a5ed843c707

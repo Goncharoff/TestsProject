@@ -1,5 +1,5 @@
 
-Jsquid:S1068",Remove this unused "callback" private field.(ºÊàå8¯™èÄ-
-¤squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ü›ºÆıÿÿÿÿ8¯™èÄ-
-Ÿsquid:S11862"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‚“¶î8•ÖÁÄ-
-nsquid:CommentedOutCodeLine("<This block of commented-out lines of code should be removed.(“›‡ùúÿÿÿÿ8µÙÛèÄ-
+Jsquid:S1068",Remove this unused "callback" private field.(ºÊàå8¯™èÄ-
+¤squid:S1186$"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ü›ºÆıÿÿÿÿ8¯™èÄ-
+Ÿsquid:S1186A"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‚“¶î8‡‡íÄ-
+Msquid:S1068"*Remove this unused "logger" private field.(ÜöÖ ûÿÿÿÿ8ÿŞÕëÄ-

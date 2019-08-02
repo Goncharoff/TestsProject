@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class SecurityFilter implements Filter {
   private static final String COMMAND_REGISTER = "command=Register";
   private static final String COMMAND_LOGIN = "command=Login";
