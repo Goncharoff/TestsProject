@@ -123,7 +123,7 @@ RENAME TO  `tester_app_prod_db`.`languages` ;
 ALTER TABLE `tester_app_prod_db`.`type_question`
 RENAME TO  `tester_app_prod_db`.`type_questions` ;
 
-ALTER TABLE `tester_app_prod_db`.`question`
+ALTER TABLE `tester_app_prod_db`.`questions`
 RENAME TO  `tester_app_prod_db`.`questions` ;
 
 ALTER TABLE `tester_app_prod_db`.`test_item`
