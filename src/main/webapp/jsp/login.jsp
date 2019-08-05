@@ -1,52 +1,117 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-  <link type="text/css" rel="stylesheet" href="/styles/login_style.css" />
-  <script type="text/javascript" src='/js/LoginForm.js'></script>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
+<style>
+    #login-text {
+        position: absolute;
+        width: 74px;
+        height: 52px;
+        left: calc(50% - 74px/2);
+        top: calc(45% - 52px/2 - 117px);
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 36px;
+        line-height: 42px;
+    }
+
+    #email-text {
+        position: absolute;
+        width: 340px;
+        height: 42px;
+        left: calc(50% - 340px/2);
+        top: calc(50% - 42px/2 - 44px);
+        border: 1px solid #C4C4C4;
+        box-sizing: border-box;
+        border-radius: 10px;
+    }
+
+    #password-text {
+        position: absolute;
+        width: 340px;
+        height: 43px;
+        left: calc(50% - 340px/2);
+        top: calc(50% - 43px/2 + 21.5px);
+        border: 1px solid #C4C4C4;
+        box-sizing: border-box;
+        border-radius: 10px;
+    }
+
+    #submit {
+        position: absolute;
+        width: 176px;
+        height: 43px;
+        left: calc(50% - 176px/2);
+        top: calc(50% - 43px/2 + 109.5px);
+        background: #000000;
+        border-radius: 10px;
+        color: #FFFFFF;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 21px;
 
 
+    }
+
+    .input-data {
+        position: absolute;
+        width: 94px;
+        height: 19px;
+        left: calc(50% - 94px/2 - 109px);
+        top: calc(50% - 19px/2 - 45.5px);
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 21px;
+        color: #CBCBCB;
+        padding: 0 2.5em 0 0.5em;
+    }
+</style>
 
 <body>
-
-
-  <div class="login-page">
-
-    <div class="form">
-
-      <form method="POST" class="register-form" id="register-form" action = "/?command=Register">
-
-        <input type="text" placeholder="name" id="name_register" name = "name"/>
-        <div id="name_error" style="color: red"></div>
-
-        <input type="text" placeholder="surname" id="surname" name = "surname"/>
-        <div id="surname_error" style="color: red"></div>
-
-        <input type="text" placeholder="email address" id="email_register" name = "email"/>
-        <div id="email_error" style="color:red"></div>
-
-        <input type="password" placeholder="password" id="register_password" name = "password"/>
-        <div id="password_error" style="color: red"></div>
-
-        <input type="password" placeholder="repeat password" id="repeat_password" name="repeat_password">
-
-        <button onclick = "return registerFormValidator();">create</button>
-        <p class="message">Already registered? <a href="#" onclick="switchToLoginForm()">Login</a></p>
-      </form>
-
-      <form   method="POST"  class="login-form" id="login-form" action = "/?command=Login">
-        <input type="text" placeholder="email" id="email" name="email" />
-        <input type="password" placeholder="password" id="password" name="password">
-        <button>login</button>
-        <p class="message">Not registered? <a href="#" onclick="switchToRegisterForm()">Create an account</a></p>
-      </form>
-
+    <div id="container">
+        <form method="POST" action="/?command=Login" id="login-form" enctype='application/json'>
+            <h3 id="login-text" class="text-center text-white pt-5" color: #000000>Login</h3>
+            <input id="email-text" type="email" placeholder="E-mail" name="userEmail" class="input-data" required>
+            <input id="password-text" type="password" placeholder="password" name="userPassword" class="input-data"
+                required>
+            <button id="submit">Login</button>
+        </form>
     </div>
 
 </body>
+
+<script type="text/javascript">
+
+    $("#login-form").submit(function (e) {
+        event.preventDefault(event);
+        var post_url = $(this).attr("action");
+        var request_method = $(this).attr("method");
+        var userInfo = {
+            "userEmail": $("#email-text").val(),
+            "userPassword": $("#password-text").val()
+        }
+
+        $.ajax({
+            url: post_url,
+            type: "POST",
+            data: JSON.stringify(userInfo),
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            success: function (data) {
+                window.location.replace(data.redirect);
+            }
+        })
+    });
+
+
+</script>
 
 </html>
