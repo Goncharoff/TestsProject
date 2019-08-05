@@ -91,3 +91,7 @@ Y
 )src/main/webapp/jsp/secured/user_info.jsp,1\f\1f070310dfa5dd9acc3fbfa6c942509ce6bf0906
 Z
 *src/main/webapp/jsp/secured/admin_info.jsp,d\7\d77a2a7c8965c90b29b3ff0085e48a5ed843c707
+`
+0src/main/java/data/response/ResponseWrapper.java,8\a\8a5a214775125a28ddc0fe4af384d3831381bb0d
+i
+9src/main/java/controller/commands/UserProfileCommand.java,1\c\1c3fcab1e264f0043ed0a144cd5a7b014abe44bc
