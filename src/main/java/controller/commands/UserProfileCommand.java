@@ -1,20 +1,19 @@
 package controller.commands;
 
-import data.business.UserStatistic;
+import data.business.User;
 import data.response.ResponseWrapper;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
-import service.UserStatisticService;
+import service.ServiceFactory;
+import service.UserService;
 
 public class UserProfileCommand extends FrontCommand {
 
-    private UserStatisticService userStatisticService = new UserStatisticService();
+    private UserService userService = ServiceFactory.getUserService();
 
     @Override
     public void process() throws ServletException, IOException {
-        List<UserStatistic> userStatistics = userStatisticService.getByUserId(Integer.parseInt(request.getParameter("user")));
+        User userStatistics = userService.selectUserWithStatisticById(Integer.parseInt(request.getParameter("user_id")));
         new ResponseWrapper<>(userStatistics, response, 200);
-
     }
 }

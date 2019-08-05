@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 </head>
+
 <style>
     #login-text {
         position: absolute;
@@ -55,8 +55,6 @@
         font-weight: bold;
         font-size: 18px;
         line-height: 21px;
-
-
     }
 
     .input-data {
@@ -98,7 +96,7 @@
             "userEmail": $("#email-text").val(),
             "userPassword": $("#password-text").val()
         }
-
+        
         $.ajax({
             url: post_url,
             type: "POST",

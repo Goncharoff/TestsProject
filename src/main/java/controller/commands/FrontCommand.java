@@ -68,12 +68,11 @@ public abstract class FrontCommand implements OnIntercept {
             BufferedReader reader = request.getReader();
             while ((line = reader.readLine()) != null) {
                 jb.append(line);
-                logger.info("line " + line);
             }
         } catch (Exception e) {
             logger.error("Can not convert to json =(");
         }
-        logger.info("got request " + jb.toString() + " oh cmon" + jb.toString().length());
+        logger.info("got request " + jb.toString() + " with length" + jb.toString().length());
         return jb.toString();
     }
 
