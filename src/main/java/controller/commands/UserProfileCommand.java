@@ -1,7 +1,7 @@
 package controller.commands;
 
 import data.business.User;
-import data.response.ResponseWrapper;
+import data.responses.ResponseWrapper;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import service.ServiceFactory;
@@ -13,7 +13,10 @@ public class UserProfileCommand extends FrontCommand {
 
     @Override
     public void process() throws ServletException, IOException {
-        User userStatistics = userService.selectUserWithStatisticById(Integer.parseInt(request.getParameter("user_id")));
+        User userStatistics = userService.selectUserWithStatisticById(
+                (long) request.getSession().getAttribute("username")
+        );
+
         new ResponseWrapper<>(userStatistics, response, 200);
     }
 }

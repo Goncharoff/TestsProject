@@ -12,4 +12,6 @@ public interface UserRepository {
   Optional<User> selectUserAndStatistic(long id);
 
   List<User> selectAllUsersWithStatistic();
+
+  Optional<User> selectUserById(long id);
 }

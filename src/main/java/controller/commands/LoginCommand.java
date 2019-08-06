@@ -4,14 +4,11 @@ import data.business.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import service.ServiceFactory;
 import service.UserService;
 import utils.UserNotFoundException;
 
 public class LoginCommand extends FrontCommand {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private UserService userService = ServiceFactory.getUserService();
 
     @Override

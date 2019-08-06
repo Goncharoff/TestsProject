@@ -1,4 +1,4 @@
-package data.response;
+package data.responses;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;

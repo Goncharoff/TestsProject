@@ -1,10 +1,12 @@
 package data.business;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Question {
+public class Question implements Serializable {
+  private static final long serialVersionUID = -6032054106755405251L;
   private final int id;
   private final String text;
   private final String url;

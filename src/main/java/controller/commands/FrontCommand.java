@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class FrontCommand implements OnIntercept {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected ServletContext context;
     protected HttpServletRequest request;

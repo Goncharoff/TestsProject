@@ -1,8 +1,10 @@
 package data.business;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Language {
+public class Language implements Serializable {
+  private static final long serialVersionUID = -888435907627502633L;
   private int id;
   private String languageId;
 

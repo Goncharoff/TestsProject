@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -11,7 +12,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $.getJSON("/?command=UserProfile", function (user) {
+            $.getJSON("/?command=AdminProfile", function (user) {
                 $("#email").append(user.userEmail);
                 $("#name").append(user.userName);
                 $("#surname").append(user.userSurname);
