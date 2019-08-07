@@ -34,12 +34,15 @@
             position: relative;
             top: 650px;
         }
+
+
     </style>
     <jsp:include page="/WEB-INF/header.jsp" />
 
 </head>
 
 <body>
+
 
 
     <div id="main-content">

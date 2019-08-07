@@ -12,8 +12,7 @@ public class AdminProfileCommand extends FrontCommand {
 
     @Override
     public void process() throws ServletException, IOException {
-        //long adminId = (long) request.getSession().getAttribute("username");
-        long adminId = 6;
+        long adminId = (long) request.getSession().getAttribute("username");
         convertStringToJsonObject(AdminInfoResponse.class);
         new ResponseWrapper<>(adminService.getAdminInfo(adminId), response, 200);
     }
