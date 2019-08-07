@@ -7,20 +7,23 @@ import repository.UserRepository;
 import utils.UserNotFoundException;
 
 public class UserService {
-  private UserRepository repository = RepositoryFactory.getUserRepository();
+    private UserRepository repository = RepositoryFactory.getUserRepository();
 
-  public User checkAndGetUser(String email, String password) {
-    return repository.selectUserByMailAndPass(email, password)
-            .orElseThrow(UserNotFoundException::new);
-  }
+    public User checkAndGetUser(String email, String password) {
+        return repository.selectUserByMailAndPass(email, password)
+                .orElseThrow(UserNotFoundException::new);
+    }
 
-  public void registerUser(User user) {
-    repository.registerUser(user);
-  }
+    public void registerUser(User user) {
+        repository.registerUser(user);
+    }
 
+    public User selectUserWithStatisticById(long id) {
+        return repository.selectUserAndStatistic(id).orElseThrow(UserNotFoundException::new);
+    }
 
-  public List<User> selectAllUsersWithStatistic() {
-    return repository.selectAllUsersWithStatistic();
-  }
+    public List<User> selectAllUsersWithStatistic() {
+        return repository.selectAllUsersWithStatistic();
+    }
 
 }

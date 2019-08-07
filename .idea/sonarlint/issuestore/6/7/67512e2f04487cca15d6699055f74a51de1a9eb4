@@ -1,8 +1,5 @@
 
-Hsquid:S1068"*Remove this unused "logger" private field.(ƒÃĞñ8üä•Ä-
-dsquid:UselessImportCheck	"9Remove this unused import 'service.UserStatisticService'.(º’ªŠ8üä•Ä-
-Xsquid:S1075"ARefactor your code to get this URI from a customizable parameter.(ü§£Ø
-]squid:S1075"ARefactor your code to get this URI from a customizable parameter.(¿Æïıÿÿÿÿ
-nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¢——²ùÿÿÿÿ8¤µÅ—Â-
-:squid:S1148"#Use a logger to log this exception.(Ç’Çê
-:squid:S1148$"#Use a logger to log this exception.(Ç’Çê
+nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¢——²ùÿÿÿÿ8¤µÅ—Â-
+]squid:S1075"ARefactor your code to get this URI from a customizable parameter.(¿Æïıÿÿÿÿ
+:squid:S1148"#Use a logger to log this exception.(Ç’Çê
+Xsquid:S1075"ARefactor your code to get this URI from a customizable parameter.(ü§£Ø

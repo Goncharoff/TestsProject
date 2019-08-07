@@ -10,7 +10,7 @@ import service.UserService;
 
 class RegisterCommand extends FrontCommand {
 
-  UserService userService = ServiceFactory.getUserService();
+  private UserService userService = ServiceFactory.getUserService();
 
   @Override
   public void process() throws ServletException, IOException {

@@ -6,7 +6,6 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.startup.VersionLoggerListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.UserStatisticService;
 
 public class App {
   private static final Logger logger = LoggerFactory.getLogger(App.class);
@@ -33,7 +32,7 @@ public class App {
     try {
       tomcat.start();
     } catch (LifecycleException ex) {
-      ex.printStackTrace();
+      logger.error("Start tomcat error : ", ex);
     }
 
     tomcat.getServer().await();

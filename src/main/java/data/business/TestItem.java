@@ -1,9 +1,11 @@
 package data.business;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class TestItem {
+public class TestItem implements Serializable {
 
+  private static final long serialVersionUID = 1924585528040856820L;
   private final int testItemId;
   private final int languageId;
   private final String name;
