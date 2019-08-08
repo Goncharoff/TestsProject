@@ -117,3 +117,15 @@ W
 'src/main/java/service/AdminService.java,e\d\ed7565c4234732b7b1d3abd0238973dd6e487199
 s
 Csrc/main/java/repository/implementation/TestItemRepositoryImpl.java,d\2\d23afed2bff08b0d068d51593ab34201d2035518
+_
+/src/main/java/repository/RepositoryFactory.java,c\0\c0854f7751ba04462f37493f6f7a0e3f020056bb
+M
+src/main/webapp/jsp/tests.jsp,4\1\412be40e3dbeab07b70b206754cb365eb7b98f9a
+s
+Csrc/main/java/repository/implementation/QuestionRepositoryImpl.java,6\a\6a42efd2fae68e17f0d10c947ccd585a4efa1c81
+T
+$src/main/webapp/jsp/test_session.jsp,9\4\94d6119550617608c0d2303ca6d33e770f30bceb
+g
+7src/main/java/controller/commands/TestsMetaCommand.java,c\0\c0a2552ef7a62c70f69ddd312ff60cfa12632796
+i
+9src/main/java/controller/commands/TestSessionCommand.java,e\a\ea08cb44456afd3d04a93510b9fed734d2d99cd0
