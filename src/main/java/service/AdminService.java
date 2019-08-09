@@ -10,7 +10,7 @@ import repository.UserStatisticRepository;
 import repository.implementation.RepositoryFactory;
 import error.UserNotFoundException;
 
-class AdminService {
+public class AdminService {
     private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
 
     private UserRepository userRepository = RepositoryFactory.getUserRepository();

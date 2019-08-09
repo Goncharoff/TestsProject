@@ -28,11 +28,11 @@ public class EncodingFilter extends BaseFilter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        String encoding = Optional.ofNullable(request.getParameter("encoding"))
-                .orElse(this.encoding);
+        String enc = Optional.ofNullable(request.getParameter("encoding"))
+                .orElse("UTF-8");
 
 
-        response.setCharacterEncoding(encoding);
+        response.setCharacterEncoding(enc);
 
         chain.doFilter(request, response);
     }

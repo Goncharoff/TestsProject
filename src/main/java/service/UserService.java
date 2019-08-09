@@ -7,8 +7,9 @@ import repository.UserRepository;
 import repository.implementation.RepositoryFactory;
 import error.UserNotFoundException;
 
-class UserService{
+public class UserService {
     private UserRepository repository = RepositoryFactory.getUserRepository();
+
 
     public User checkAndGetUser(String email, String password) {
         return repository.selectUserByMailAndPass(email, password)

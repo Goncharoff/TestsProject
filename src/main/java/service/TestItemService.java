@@ -5,7 +5,7 @@ import java.util.List;
 import repository.implementation.RepositoryFactory;
 import repository.TestItemRepository;
 
-class TestItemService {
+public class TestItemService {
   private TestItemRepository testItemRepository = RepositoryFactory.getTestItemRepository();
 
   public List<TestItem> getAllTestItems() {

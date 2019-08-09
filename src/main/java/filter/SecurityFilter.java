@@ -27,10 +27,10 @@ public class SecurityFilter extends BaseFilter implements Filter {
 
     private OnIntercept callback;
 
-    protected SecurityFilter() {
+    public SecurityFilter() {
     }
 
-    protected SecurityFilter(OnIntercept callback) {
+    public SecurityFilter(OnIntercept callback) {
         this.callback = callback;
     }
 

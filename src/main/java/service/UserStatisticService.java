@@ -1,17 +1,17 @@
 package service;
 
 import data.business.UserStatistic;
+import error.DatabaseException;
 import java.util.List;
 import repository.implementation.RepositoryFactory;
 import repository.UserStatisticRepository;
-import error.SqlOperationsException;
 
 //TODO custom exception
-class UserStatisticService {
+public class UserStatisticService {
     private UserStatisticRepository userStatisticRepository = RepositoryFactory.getUserStatisticRepository();
 
     public List<UserStatistic> getByUserId(long id) {
-        return userStatisticRepository.selectUserStatisticByUserId(id).orElseThrow(SqlOperationsException::new);
+        return userStatisticRepository.selectUserStatisticByUserId(id).orElseThrow(() -> new DatabaseException("Can not find user with such params"));
     }
 
     public void updateStatistic(long id, UserStatistic userStatistic) {

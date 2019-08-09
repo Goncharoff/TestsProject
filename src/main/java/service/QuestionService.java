@@ -5,7 +5,7 @@ import java.util.List;
 import repository.QuestionRepository;
 import repository.implementation.RepositoryFactory;
 
-class QuestionService {
+public class QuestionService {
   private QuestionRepository questionRepository = RepositoryFactory.getQuestionRepository();
 
   public List<Question> getQuestionAnAnswersByTestItemId(int id) {

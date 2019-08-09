@@ -1,7 +1,6 @@
 package error;
 
-public class NotFoundRoleException extends RuntimeException{
-
+public class NotFoundRoleException extends DatabaseException {
     public NotFoundRoleException(String message) {
         super(message);
     }
