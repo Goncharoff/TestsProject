@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+/**
+ * Connection pull for database, using apache DBCP2 framework implements singleton.
+ */
 public class ConnectionPool {
   private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
   private static final String DB_URL = "jdbc:mysql://localhost:3306/tester_app_prod_db?serverTimezone=UTC";
@@ -16,6 +19,10 @@ public class ConnectionPool {
 
   private static BasicDataSource ds = new BasicDataSource();
 
+
+  /**
+   * Get instance of connection pool.
+   */
   private static class DataSourceHolder {
     private static final ConnectionPool INSTANCE = new ConnectionPool();
   }

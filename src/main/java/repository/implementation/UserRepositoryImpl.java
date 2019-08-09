@@ -1,11 +1,14 @@
 package repository.implementation;
 
 import data.ConnectionPool;
-import data.PasswordEncoder;
+import data.business.Role;
 import data.business.User;
-import data.business.UserRole;
 import data.business.UserStatistic;
 import data.quires.UserQueries;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,14 +18,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.UserRepository;
-import utils.UserNotFoundException;
+import error.UserNotFoundException;
 
 
 public class UserRepositoryImpl implements UserRepository {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    //should be instanced using factory
+    UserRepositoryImpl() {
+    }
 
     @Override
     public void registerUser(User user) {
@@ -53,11 +62,14 @@ public class UserRepositoryImpl implements UserRepository {
                 throw new UserNotFoundException("Password is incorrect!");
             }
 
+
+            //new UserRole(rs.getInt("id_user_roles"), rs.getString("role")))
+
             User resultUser = new User.builder().setId(rs.getLong("user_id"))
                     .setUserEmail(rs.getString("user_email"))
                     .setUserName(rs.getString("user_name"))
                     .setUserSurname(rs.getString("user_surname"))
-                    .setUserRole(new UserRole(rs.getInt("id_user_roles"), rs.getString("role")))
+                    .setUserRole(Role.provideRoleFromCode(rs.getInt("id_user_roles")))
                     .build();
 
 
@@ -127,7 +139,6 @@ public class UserRepositoryImpl implements UserRepository {
 
             while (rs.next()) {
                 long userId = rs.getInt("users.user_id");
-                logger.info("Current id = " + userId);
                 selectUserAndStatistic(userId).ifPresent(resultSet::add);
             }
 
@@ -184,4 +195,80 @@ public class UserRepositoryImpl implements UserRepository {
 
         return preparedStatement;
     }
+
+    /**
+     * Password hashing helper class.
+     */
+
+    private static class PasswordEncoder {
+        private final static Logger logger = LoggerFactory.getLogger(PasswordEncoder.class);
+
+        static String generatePasswordHash(String password) {
+            int iterations = 1000;
+            char[] chars = password.toCharArray();
+
+            try {
+                byte[] salt = getSalt();
+                PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
+                SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+                byte[] hash = skf.generateSecret(spec).getEncoded();
+                return iterations + ":" + toHex(salt) + ":" + toHex(hash);
+            } catch (InvalidKeySpecException | NoSuchAlgorithmException ex) {
+                logger.error("Can not hash password");
+                throw new SecurityException("Can not hash password");
+            }
+
+        }
+
+        static boolean validatePassword(String originalPassword, String storedPassword) {
+            String[] parts = storedPassword.split(":");
+            int iterations = Integer.parseInt(parts[0]);
+            int diff = -1;
+
+            try {
+                byte[] salt = fromHex(parts[1]);
+                byte[] hash = fromHex(parts[2]);
+                PBEKeySpec spec = new PBEKeySpec(originalPassword.toCharArray(), salt, iterations, hash.length * 8);
+                SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+                byte[] testHash = skf.generateSecret(spec).getEncoded();
+                diff = hash.length ^ testHash.length;
+                for (int i = 0; i < hash.length && i < testHash.length; i++) {
+                    diff |= hash[i] ^ testHash[i];
+                }
+
+            } catch (InvalidKeySpecException | NoSuchAlgorithmException ex) {
+                logger.error("Cannot validate password");
+            }
+
+
+            return diff == 0;
+        }
+
+        private static byte[] getSalt() throws NoSuchAlgorithmException {
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+            byte[] salt = new byte[16];
+            sr.nextBytes(salt);
+            return salt;
+        }
+
+        private static byte[] fromHex(String hex) {
+            byte[] bytes = new byte[hex.length() / 2];
+            for (int i = 0; i < bytes.length; i++) {
+                bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+            }
+            return bytes;
+        }
+
+        private static String toHex(byte[] array) {
+            BigInteger bi = new BigInteger(1, array);
+            String hex = bi.toString(16);
+            int paddingLength = (array.length * 2) - hex.length();
+            if (paddingLength > 0) {
+                return String.format("%0" + paddingLength + "d", 0) + hex;
+            } else {
+                return hex;
+            }
+        }
+    }
+
 }

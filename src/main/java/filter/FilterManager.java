@@ -6,14 +6,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Class for instantiating filter chains, registering filters, and initiate them.
+ */
 public class FilterManager {
-  public static void process(HttpServletRequest request,
-                             HttpServletResponse response, OnIntercept callback) throws IOException, ServletException {
 
-    FilterChain filterChain = new FilterChainImpl(
-            new SecurityFilter(callback)
-    );
+    //Should not be instanced.
+    private FilterManager() {
+    }
 
-    filterChain.doFilter(request, response);
-  }
+    public static void process(HttpServletRequest request,
+                               HttpServletResponse response, OnIntercept callback) throws IOException, ServletException {
+
+        FilterChain filterChain = new FilterChainImpl(
+                new EncodingFilter(),
+                new SecurityFilter(callback)
+        );
+
+        filterChain.doFilter(request, response);
+    }
 }

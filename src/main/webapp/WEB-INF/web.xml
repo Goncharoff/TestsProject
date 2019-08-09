@@ -16,6 +16,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Registration form</servlet-name>
+        <jsp-file>/jsp/registration.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Registration form</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>User info</servlet-name>
         <jsp-file>/jsp/user_info.jsp</jsp-file>
     </servlet>
@@ -59,6 +69,15 @@
         <role-name>ADMIN</role-name>
         <role-name>USER</role-name>
     </security-role>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/jsp/500.jsp</location>
+    </error-page>
 
     <jsp-config>
         <jsp-property-group>

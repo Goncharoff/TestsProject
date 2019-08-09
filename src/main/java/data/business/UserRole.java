@@ -3,6 +3,9 @@ package data.business;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Database object for user_roles tables.
+ */
 public class UserRole implements Serializable {
   private static final long serialVersionUID = -7082656882270827005L;
 

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Database object for user_statistics table
+ */
 public class UserStatistic implements Serializable {
 
   private static final long serialVersionUID = 6058204516328858726L;
@@ -24,6 +27,9 @@ public class UserStatistic implements Serializable {
     this.userId = userId;
   }
 
+  /**
+   * Builder pattern for entity.
+   */
   public static class builder {
     private long id;
     private int correctAnswers;

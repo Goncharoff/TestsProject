@@ -1,20 +1,22 @@
 package service;
 
 import data.business.User;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
-import repository.RepositoryFactory;
 import repository.UserRepository;
-import utils.UserNotFoundException;
+import repository.implementation.RepositoryFactory;
+import error.UserNotFoundException;
 
 public class UserService {
     private UserRepository repository = RepositoryFactory.getUserRepository();
+
 
     public User checkAndGetUser(String email, String password) {
         return repository.selectUserByMailAndPass(email, password)
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public void registerUser(User user) {
+    public void registerUser(User user) throws SQLIntegrityConstraintViolationException {
         repository.registerUser(user);
     }
 

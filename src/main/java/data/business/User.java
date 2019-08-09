@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Database object for users table.
+ */
 public class User implements Serializable {
 
     private static final long serialVersionUID = -3135896295862517804L;
@@ -13,7 +15,7 @@ public class User implements Serializable {
     private final long id;
     private final String userEmail;
     private final String userPassword;
-    private final UserRole userRole;
+    private final Role userRole;
     private final String userName;
     private final String userSurname;
     private List<UserStatistic> userStatistics;
@@ -30,7 +32,8 @@ public class User implements Serializable {
         this.testItems = null;
     }
 
-    public User(long id, String userEmail, String userPassword, UserRole userRole, String userName, String userSurname, List<UserStatistic> userStatistics) {
+    public User(long id, String userEmail, String userPassword, Role userRole, String userName, String userSurname,
+                List<UserStatistic> userStatistics) {
         this.id = id;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
@@ -40,11 +43,14 @@ public class User implements Serializable {
         this.userStatistics = userStatistics;
     }
 
+    /**
+     * Builder pattern for entity.
+     */
     public static class builder {
         private long id;
         private String userEmail;
         private String userPassword;
-        private UserRole userRole;
+        private Role userRole;
         private String userName;
         private String userSurname;
         private List<UserStatistic> userStatistics = new ArrayList<>();
@@ -74,7 +80,7 @@ public class User implements Serializable {
             return this;
         }
 
-        public builder setUserRole(UserRole userRole) {
+        public builder setUserRole(Role userRole) {
             this.userRole = userRole;
             return this;
         }
@@ -104,7 +110,7 @@ public class User implements Serializable {
     }
 
 
-    public UserRole getUserRole() {
+    public Role getUserRole() {
         return userRole;
     }
 

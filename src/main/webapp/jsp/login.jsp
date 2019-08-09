@@ -84,6 +84,7 @@
                 required>
             <button id="submit">Login</button>
         </form>
+        <a href="/registration">Registration</a>
     </div>
 
 </body>
@@ -98,7 +99,7 @@
             "userEmail": $("#email-text").val(),
             "userPassword": $("#password-text").val()
         }
-        
+
         $.ajax({
             url: post_url,
             type: "POST",

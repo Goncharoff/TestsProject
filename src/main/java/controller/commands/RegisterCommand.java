@@ -1,35 +1,41 @@
 package controller.commands;
 
 import data.business.User;
-import data.business.UserRole;
+import data.response.RedirectResponse;
+import data.response.ResponseWrapper;
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import service.ServiceFactory;
 import service.UserService;
+import error.JsonMappingException;
 
-class RegisterCommand extends FrontCommand {
+/**
+ * Command for register user.
+ */
+public class RegisterCommand extends FrontCommand {
+    private static final String USER_JSP = "user_info";
+    private UserService userService = ServiceFactory.getUserService();
 
-  private UserService userService = ServiceFactory.getUserService();
+    /**
+     * Gets user credentials from user form and redirect it to login page.
+     *
+     * @throws JsonMappingException if params can not be mapped to user.
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    public void process() throws ServletException, IOException {
+        User inputUser = convertRequestToJsonObject(User.class).orElseThrow(
+                () -> new JsonMappingException("Can't map user input params to such json")
+        );
+        try {
+            userService.registerUser(inputUser);
 
-  @Override
-  public void process() throws ServletException, IOException {
-    userService.registerUser(buildUserFromInput(request));
-    forward("user_info");
-  }
+            new ResponseWrapper<>(new RedirectResponse(request.getContextPath() + "/user_info"), response);
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            logger.error("User already exist");
+        }
+    }
 
-  private User buildUserFromInput(HttpServletRequest request) {
-    String name = request.getParameter("name");
-    String surname = request.getParameter("surname");
-    String password = request.getParameter("password");
-    String email = request.getParameter("email");
-
-    return new User.builder()
-            .setUserName(name)
-            .setUserSurname(surname)
-            .setUserPassword(password)
-            .setUserEmail(email)
-            .setUserRole(new UserRole("USER"))
-            .build();
-  }
 }

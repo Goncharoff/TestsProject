@@ -15,86 +15,89 @@ import org.slf4j.LoggerFactory;
 import repository.UserStatisticRepository;
 
 public class UserStatisticRepositoryImpl implements UserStatisticRepository {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  @Override
-  public Optional<List<UserStatistic>> selectUserStatisticByUserId(long id) {
-    List<UserStatistic> resultUserStatistics = new ArrayList<>();
-
-    try (Connection connection = ConnectionPool.getConnection();
-         PreparedStatement preparedStatement =
-                 connection.prepareStatement(UserStatisticQueries.GET_STATISTIC_BY_USER_ID.getQUERY());
-         ResultSet rs = getPSForUserStatistic(preparedStatement, id).executeQuery()) {
-
-      UserStatistic.builder userStatisticBuilder = new UserStatistic.builder();
-
-      while (rs.next()) {
-        userStatisticBuilder
-                .setId(rs.getLong("user_statistic_id"))
-                .setTestName(rs.getString("test_name"))
-                .setPassedAnswers(rs.getInt("all_questions_passed"))
-                .setCorrectAnswers(rs.getInt("correct_answered"))
-                .setDateRecorded(rs.getDate("date_recorded"));
-
-        resultUserStatistics.add(userStatisticBuilder.build());
-      }
-
-    } catch (SQLException ex) {
-      logger.error("Error during getting user statistic by user id ex = ", ex);
+    //should be instanced using factory
+    UserStatisticRepositoryImpl() {
     }
 
-    return Optional.of(resultUserStatistics);
-  }
+    @Override
+    public Optional<List<UserStatistic>> selectUserStatisticByUserId(long id) {
+        List<UserStatistic> resultUserStatistics = new ArrayList<>();
+        UserStatistic.builder userStatisticBuilder = new UserStatistic.builder();
 
-  @Override
-  public void updateUserStatistic(long id, UserStatistic userStatistic) {
-    try (Connection connection = ConnectionPool.getConnection();
-         PreparedStatement preparedStatement =
-                 connection.prepareStatement(UserStatisticQueries.UPDATE_STATISTIC_BY_ID.getQUERY())) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement(UserStatisticQueries.GET_STATISTIC_BY_USER_ID.getQUERY());
+             ResultSet rs = getPSForUserStatistic(preparedStatement, id).executeQuery()) {
 
-      getPSForUpdateById(preparedStatement, id, userStatistic).executeUpdate();
 
-    } catch (SQLException ex) {
-      logger.error("Error during updating data for statistic", ex);
+            while (rs.next()) {
+                userStatisticBuilder.setId(rs.getLong("user_statistic_id"))
+                        .setTestName(rs.getString("test_name"))
+                        .setPassedAnswers(rs.getInt("all_questions_passed"))
+                        .setCorrectAnswers(rs.getInt("correct_answered"))
+                        .setDateRecorded(rs.getDate("date_recorded"));
+
+                resultUserStatistics.add(userStatisticBuilder.build());
+            }
+
+        } catch (SQLException ex) {
+            logger.error("Error during getting user statistic by user id ex = ", ex);
+        }
+
+        return Optional.of(resultUserStatistics);
     }
-  }
 
-  @Override
-  public void insertStatistic(long user_id, UserStatistic userStatistic) {
-    try (Connection connection = ConnectionPool.getConnection();
-         PreparedStatement preparedStatement =
-                 connection.prepareStatement(UserStatisticQueries.INSERT_BY_USER_ID.getQUERY())) {
+    @Override
+    public void updateUserStatistic(long id, UserStatistic userStatistic) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement(UserStatisticQueries.UPDATE_STATISTIC_BY_ID.getQUERY())) {
 
-      getPSForInserting(preparedStatement, user_id, userStatistic).executeUpdate();
+            getPSForUpdateById(preparedStatement, id, userStatistic).executeUpdate();
 
-    } catch (SQLException ex) {
-      logger.error("Error during inserting data for statistic", ex);
+        } catch (SQLException ex) {
+            logger.error("Error during updating data for statistic", ex);
+        }
     }
-  }
 
-  private PreparedStatement getPSForUserStatistic(PreparedStatement preparedStatement, long id) throws SQLException {
-    preparedStatement.setLong(1, id);
+    @Override
+    public void insertStatistic(long user_id, UserStatistic userStatistic) {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement(UserStatisticQueries.INSERT_BY_USER_ID.getQUERY())) {
 
-    return preparedStatement;
-  }
+            getPSForInserting(preparedStatement, user_id, userStatistic).executeUpdate();
 
-  private PreparedStatement getPSForUpdateById(PreparedStatement preparedStatement, long id, UserStatistic userStatistic)
-          throws SQLException {
-    preparedStatement.setInt(1, userStatistic.getPassedAnswers());
-    preparedStatement.setInt(2, userStatistic.getCorrectAnswers());
-    preparedStatement.setString(3, userStatistic.getTestName());
-    preparedStatement.setLong(4, id);
+        } catch (SQLException ex) {
+            logger.error("Error during inserting data for statistic", ex);
+        }
+    }
 
-    return preparedStatement;
-  }
+    private PreparedStatement getPSForUserStatistic(PreparedStatement preparedStatement, long id) throws SQLException {
+        preparedStatement.setLong(1, id);
 
-  private PreparedStatement getPSForInserting(PreparedStatement preparedStatement, long user_id, UserStatistic userStatistic)
-          throws SQLException {
-    preparedStatement.setInt(1, userStatistic.getCorrectAnswers());
-    preparedStatement.setInt(2, userStatistic.getPassedAnswers());
-    preparedStatement.setString(3, userStatistic.getTestName());
-    preparedStatement.setLong(4, userStatistic.getUserId());
+        return preparedStatement;
+    }
 
-    return preparedStatement;
-  }
+    private PreparedStatement getPSForUpdateById(PreparedStatement preparedStatement, long id, UserStatistic userStatistic)
+            throws SQLException {
+        preparedStatement.setInt(1, userStatistic.getPassedAnswers());
+        preparedStatement.setInt(2, userStatistic.getCorrectAnswers());
+        preparedStatement.setString(3, userStatistic.getTestName());
+        preparedStatement.setLong(4, id);
+
+        return preparedStatement;
+    }
+
+    private PreparedStatement getPSForInserting(PreparedStatement preparedStatement, long user_id, UserStatistic userStatistic)
+            throws SQLException {
+        preparedStatement.setInt(1, userStatistic.getCorrectAnswers());
+        preparedStatement.setInt(2, userStatistic.getPassedAnswers());
+        preparedStatement.setString(3, userStatistic.getTestName());
+        preparedStatement.setLong(4, userStatistic.getUserId());
+
+        return preparedStatement;
+    }
 }

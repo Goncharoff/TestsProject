@@ -3,7 +3,7 @@ package service;
 import data.business.Question;
 import java.util.Set;
 import repository.QuestionRepository;
-import repository.RepositoryFactory;
+import repository.implementation.RepositoryFactory;
 
 public class QuestionService {
   private QuestionRepository questionRepository = RepositoryFactory.getQuestionRepository();
