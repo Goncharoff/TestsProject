@@ -1,0 +1,6 @@
+
+squid:S2629K"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(°×ÒÄûÿÿÿÿ8…®ì„Æ-
+¯%squid:RedundantThrowsDeclarationCheck9"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(¹™‹½8…®ì„Æ-
+dsquid:S3457K"AFormat specifiers should be used instead of string concatenation.(°×ÒÄûÿÿÿÿ8…®ì„Æ-
+Asquid:S2629:"$Invoke method(s) only conditionally.(ô¯ÇR8…®ì„Æ-
+Gsquid:S2629;"$Invoke method(s) only conditionally.(üàòÉüÿÿÿÿ8…®ì„Æ-
