@@ -3,6 +3,9 @@ package data.business;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Database object for test_items table
+ */
 public class TestItem implements Serializable {
 
   private static final long serialVersionUID = 1924585528040856820L;

@@ -1,4 +1,4 @@
-package data.responses;
+package data.response;
 
 import data.business.User;
 import java.io.Serializable;

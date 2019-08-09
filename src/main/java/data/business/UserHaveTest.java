@@ -3,6 +3,9 @@ package data.business;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Cross table object for users and tables.
+ */
 public class UserHaveTest implements Serializable {
 
   private static final long serialVersionUID = -5356190852010447794L;

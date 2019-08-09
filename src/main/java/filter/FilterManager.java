@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class FilterManager {
-  public static void process(HttpServletRequest request,
-                             HttpServletResponse response, OnIntercept callback) throws IOException, ServletException {
+    public static void process(HttpServletRequest request,
+                               HttpServletResponse response, OnIntercept callback) throws IOException, ServletException {
 
-    FilterChain filterChain = new FilterChainImpl(
-            new SecurityFilter(callback)
-    );
+        FilterChain filterChain = new FilterChainImpl(
+                new EncodingFilter(),
+                new SecurityFilter(callback)
+        );
 
-    filterChain.doFilter(request, response);
-  }
+        filterChain.doFilter(request, response);
+    }
 }

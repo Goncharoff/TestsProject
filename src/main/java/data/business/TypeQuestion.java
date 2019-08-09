@@ -3,6 +3,9 @@ package data.business;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Database object for types_questions table.
+ */
 public class TypeQuestion implements Serializable {
   private static final long serialVersionUID = -7735066126436978815L;
   private int id;

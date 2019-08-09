@@ -1,8 +1,11 @@
 package service;
 
 import data.business.User;
-import data.responses.AdminInfoResponse;
+import data.response.AdminInfoResponse;
+import data.response.ResponseWrapper;
 import java.util.List;
+import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.RepositoryFactory;
@@ -20,4 +23,6 @@ public class AdminService {
         List<User> usersStatistic = userRepository.selectAllUsersWithStatistic();
         return new AdminInfoResponse(adminUser, usersStatistic);
     }
+
+
 }

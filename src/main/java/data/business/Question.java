@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Database object for questions table.
+ */
 public class Question implements Serializable {
   private static final long serialVersionUID = -6032054106755405251L;
   private final int id;
@@ -25,6 +28,9 @@ public class Question implements Serializable {
     this.answers = answers;
   }
 
+  /**
+   * Builder pattern for entity.
+   */
   public static class builder {
     private int id;
     private String text;

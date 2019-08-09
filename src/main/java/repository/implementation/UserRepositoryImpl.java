@@ -2,6 +2,7 @@ package repository.implementation;
 
 import data.ConnectionPool;
 import data.PasswordEncoder;
+import data.business.Role;
 import data.business.User;
 import data.business.UserRole;
 import data.business.UserStatistic;
@@ -53,11 +54,14 @@ public class UserRepositoryImpl implements UserRepository {
                 throw new UserNotFoundException("Password is incorrect!");
             }
 
+
+            //new UserRole(rs.getInt("id_user_roles"), rs.getString("role")))
+
             User resultUser = new User.builder().setId(rs.getLong("user_id"))
                     .setUserEmail(rs.getString("user_email"))
                     .setUserName(rs.getString("user_name"))
                     .setUserSurname(rs.getString("user_surname"))
-                    .setUserRole(new UserRole(rs.getInt("id_user_roles"), rs.getString("role")))
+                    .setUserRole(Role.provideRoleFromCode(rs.getInt("id_user_roles")))
                     .build();
 
 
@@ -127,7 +131,6 @@ public class UserRepositoryImpl implements UserRepository {
 
             while (rs.next()) {
                 long userId = rs.getInt("users.user_id");
-                logger.info("Current id = " + userId);
                 selectUserAndStatistic(userId).ifPresent(resultSet::add);
             }
 

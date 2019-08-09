@@ -3,9 +3,9 @@ package controller.commands;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import data.response.RequestWrapper;
 import filter.FilterManager;
 import filter.OnIntercept;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Optional;
@@ -14,14 +14,16 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Abstract class for Commands to implement FrontPattern;
+ */
 public abstract class FrontCommand implements OnIntercept {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    private final static String JSP_PATH_PATTERN = "/jsp/%s.jsp";
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
@@ -42,24 +44,53 @@ public abstract class FrontCommand implements OnIntercept {
         this.response = response;
     }
 
+    /**
+     * Process filter chain.
+     *
+     * @throws ServletException
+     * @throws IOException
+     */
     public void process() throws ServletException, IOException {
         FilterManager.process(request, response, this);
     }
 
+    /**
+     * Goes forward from current request;
+     * If filters doesn't processed then doesn't do actions.
+     *
+     * @param target path to jsp to go forward;
+     * @throws ServletException
+     * @throws IOException
+     */
     void forward(String target) throws ServletException, IOException {
         if (intercept) return;
 
-        target = String.format("/jsp/%s.jsp", target);
+        target = String.format(JSP_PATH_PATTERN, target);
         RequestDispatcher dispatcher = context.getRequestDispatcher(request.getContextPath() + target);
+        logger.info("Forwarding from {} to ({})", request.getContextPath(), target);
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Redirecting from current page;
+     * If filters doesn't processed then doesn't do actions.
+     *
+     * @param target - url to go redirect
+     * @throws ServletException
+     * @throws IOException
+     */
     void redirect(String target) throws ServletException, IOException {
-        logger.info(String.format("Redirecting from %s", request.getContextPath()));
-        logger.info(String.format("to %s", request.getContextPath()));
+
+
+        logger.info("Redirecting from {} to ({})", request.getContextPath(), target);
         response.sendRedirect(context.getContextPath() + target);
     }
 
+    /**
+     * Get request and map it to Json;
+     *
+     * @return Request as json
+     */
     private String requestToJsonString() {
         StringBuilder jb = new StringBuilder();
         String line;
@@ -70,15 +101,23 @@ public abstract class FrontCommand implements OnIntercept {
                 jb.append(line);
             }
         } catch (Exception e) {
-            logger.error("Can not convert to json =(");
+            logger.error("Error during converting request to json");
         }
-        logger.info("got request " + jb.toString() + " with length" + jb.toString().length());
+
         return jb.toString();
     }
 
-    <T> Optional<T> convertStringToJsonObject(Class<T> classToConvert) {
+    /**
+     * Map json string to java object
+     *
+     * @param classToConvert Class to map json.
+     * @param <T>            Class of object to map.
+     * @return Java object mapped from json.
+     */
+    <T> Optional<T> convertRequestToJsonObject(Class<T> classToConvert) {
         ObjectMapper mapper = new ObjectMapper();
         Optional<T> resultObject = Optional.empty();
+
         try {
             resultObject = Optional.of(mapper.readValue(requestToJsonString(), classToConvert));
         } catch (JsonParseException ex) {
@@ -91,6 +130,7 @@ public abstract class FrontCommand implements OnIntercept {
 
         return resultObject;
     }
+
 
     @Override
     public void intercept() {
