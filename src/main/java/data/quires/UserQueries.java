@@ -34,7 +34,6 @@ public enum UserQueries {
         this.QUERY = QUERY;
     }
 
-
     public String getQUERY() {
         return QUERY;
     }
