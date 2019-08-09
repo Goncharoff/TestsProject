@@ -5,15 +5,15 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-      <servlet>
+    <servlet>
         <servlet-name>Login form</servlet-name>
         <jsp-file>/jsp/login.jsp</jsp-file>
-      </servlet>
+    </servlet>
 
-      <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Login form</servlet-name>
         <url-pattern>/login</url-pattern>
-      </servlet-mapping>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Registration form</servlet-name>
@@ -45,6 +45,26 @@
         <url-pattern>/admin_info</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Tests meta</servlet-name>
+        <jsp-file>/jsp/tests.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Tests meta</servlet-name>
+        <url-pattern>/tests</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Tests session</servlet-name>
+        <jsp-file>/jsp/test_session.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Tests session</servlet-name>
+        <url-pattern>/tests/test_session/*</url-pattern>
+    </servlet-mapping>
+
     <security-role>
         <role-name>ADMIN</role-name>
         <role-name>USER</role-name>
@@ -66,15 +86,15 @@
         </jsp-property-group>
     </jsp-config>
 
-<!--    <jsp-config>-->
-<!--        !&#45;&#45; Turn off scripting in jsp&ndash;&gt;-->
-<!--        <jsp-property-group>-->
-<!--            <url-pattern>*.jsp</url-pattern>-->
-<!--            <scripting-invalid>-->
-<!--                true-->
-<!--            </scripting-invalid>-->
-<!--            <url-pattern>*.xyz</url-pattern>-->
-<!--        </jsp-property-group>-->
-<!--    </jsp-config>-->
+    <!--    <jsp-config>-->
+    <!--        !&#45;&#45; Turn off scripting in jsp&ndash;&gt;-->
+    <!--        <jsp-property-group>-->
+    <!--            <url-pattern>*.jsp</url-pattern>-->
+    <!--            <scripting-invalid>-->
+    <!--                true-->
+    <!--            </scripting-invalid>-->
+    <!--            <url-pattern>*.xyz</url-pattern>-->
+    <!--        </jsp-property-group>-->
+    <!--    </jsp-config>-->
 
 </web-app>
