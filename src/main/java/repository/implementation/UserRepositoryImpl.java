@@ -1,7 +1,6 @@
 package repository.implementation;
 
 import data.ConnectionPool;
-import data.PasswordEncoder;
 import data.business.Role;
 import data.business.User;
 import data.business.UserStatistic;
@@ -24,11 +23,15 @@ import javax.crypto.spec.PBEKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.UserRepository;
-import utils.UserNotFoundException;
+import error.UserNotFoundException;
 
 
 public class UserRepositoryImpl implements UserRepository {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    //should be instanced using factory
+    UserRepositoryImpl() {
+    }
 
     @Override
     public void registerUser(User user) {
@@ -193,7 +196,12 @@ public class UserRepositoryImpl implements UserRepository {
         return preparedStatement;
     }
 
+    /**
+     * Password hashing helper class.
+     */
+
     private static class PasswordEncoder {
+        private final static Logger logger = LoggerFactory.getLogger(PasswordEncoder.class);
 
         static String generatePasswordHash(String password) {
             int iterations = 1000;
@@ -206,8 +214,8 @@ public class UserRepositoryImpl implements UserRepository {
                 byte[] hash = skf.generateSecret(spec).getEncoded();
                 return iterations + ":" + toHex(salt) + ":" + toHex(hash);
             } catch (InvalidKeySpecException | NoSuchAlgorithmException ex) {
-                throw new SecurityException("halp");
-                //log
+                logger.error("Can not hash password");
+                throw new SecurityException("Can not hash password");
             }
 
         }
@@ -229,8 +237,7 @@ public class UserRepositoryImpl implements UserRepository {
                 }
 
             } catch (InvalidKeySpecException | NoSuchAlgorithmException ex) {
-                throw new SecurityException("halp");
-                //TODO logs
+                logger.error("Cannot validate password");
             }
 
 
@@ -244,7 +251,7 @@ public class UserRepositoryImpl implements UserRepository {
             return salt;
         }
 
-        private static byte[] fromHex(String hex) throws NoSuchAlgorithmException {
+        private static byte[] fromHex(String hex) {
             byte[] bytes = new byte[hex.length() / 2];
             for (int i = 0; i < bytes.length; i++) {
                 bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
@@ -252,7 +259,7 @@ public class UserRepositoryImpl implements UserRepository {
             return bytes;
         }
 
-        private static String toHex(byte[] array) throws NoSuchAlgorithmException {
+        private static String toHex(byte[] array) {
             BigInteger bi = new BigInteger(1, array);
             String hex = bi.toString(16);
             int paddingLength = (array.length * 2) - hex.length();

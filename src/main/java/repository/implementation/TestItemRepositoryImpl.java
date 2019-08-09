@@ -15,67 +15,70 @@ import org.slf4j.LoggerFactory;
 import repository.TestItemRepository;
 
 public class TestItemRepositoryImpl implements TestItemRepository {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final static Logger logger = LoggerFactory.getLogger(TestItemRepositoryImpl.class);
 
-  @Override
-  public List<TestItem> getAllTestItems() {
-    List<TestItem> resultSet = new ArrayList<>();
+    //should be instanced using factory
+    TestItemRepositoryImpl() {
+    }
 
-    try (Connection connection = ConnectionPool.getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(TestItemQueries.SELECT_ALL_TEST_ITEMS.getQUERY());
-         ResultSet rs = preparedStatement.executeQuery()) {
+    @Override
+    public List<TestItem> getAllTestItems() {
+        List<TestItem> resultSet = new ArrayList<>();
 
-      while (rs.next()) {
-        resultSet.add(new TestItem.builder()
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(TestItemQueries.SELECT_ALL_TEST_ITEMS.getQUERY());
+             ResultSet rs = preparedStatement.executeQuery()) {
+
+            while (rs.next()) {
+                resultSet.add(buildTestItemFromRs(rs));
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error during selecting test items ", e);
+        }
+
+        return resultSet;
+    }
+
+    @Override
+    public List<TestItem> getPagingTestItems(int pageNumber, int pageSize) {
+
+        if (pageNumber < 0 && pageSize < 0) {
+            throw new IllegalArgumentException("Negative parameters in pagination page number = " + pageNumber +
+                    " page size = " + pageSize);
+        }
+
+        String selectQueryWithPagination = TestItemQueries.SELECT_ALL_TEST_ITEMS.getQUERY() +
+                " LIMIT " +
+                (pageNumber - 1) * pageSize +
+                " , " +
+                pageSize;
+
+        List<TestItem> resultSet = new ArrayList<>();
+
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectQueryWithPagination);
+             ResultSet rs = preparedStatement.executeQuery()) {
+
+            while (rs.next()) {
+                resultSet.add(buildTestItemFromRs(rs));
+            }
+
+        } catch (SQLException e) {
+            logger.error("Error during selecting test items with pagination", e);
+        }
+
+        return resultSet;
+    }
+
+    private TestItem buildTestItemFromRs(ResultSet rs) throws SQLException {
+
+        return new TestItem.builder()
                 .setId(rs.getInt("test_item_id"))
                 .setTheme(rs.getString("theme"))
                 .setName(rs.getString("name"))
                 .setLanguage(new Language(rs.getInt("language_id"), rs.getString("language_name")))
                 .setDesctiption(rs.getString("description"))
-                .build());
-      }
-
-    } catch (SQLException e) {
-      logger.error("Error during selecting test items ", e);
+                .build();
     }
-
-    return resultSet;
-  }
-
-  @Override
-  public List<TestItem> getPagingTestItems(int pageNumber, int pageSize) {
-
-    if (pageNumber < 0 && pageSize < 0) {
-      throw new IllegalArgumentException("Negative parameters in pagination page number = " + pageNumber +
-              " page size = " + pageSize);
-    }
-
-    String selectQueryWithPagination = TestItemQueries.SELECT_ALL_TEST_ITEMS.getQUERY() +
-            " LIMIT " +
-            (pageNumber - 1) * pageSize +
-            " , " +
-            pageSize;
-
-    List<TestItem> resultSet = new ArrayList<>();
-
-    try (Connection connection = ConnectionPool.getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(selectQueryWithPagination);
-         ResultSet rs = preparedStatement.executeQuery()) {
-
-      while (rs.next()) {
-        resultSet.add(new TestItem.builder()
-                .setId(rs.getInt("test_item_id"))
-                .setTheme(rs.getString("theme"))
-                .setName(rs.getString("name"))
-                .setLanguage(new Language(rs.getInt("language_id"), rs.getString("language_name")))
-                .setDesctiption(rs.getString("description"))
-                .build());
-      }
-
-    } catch (SQLException e) {
-      logger.error("Error during selecting test items with pagination", e);
-    }
-
-    return resultSet;
-  }
 }

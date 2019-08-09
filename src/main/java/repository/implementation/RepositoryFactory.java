@@ -1,5 +1,8 @@
-package repository;
+package repository.implementation;
 
+import repository.QuestionRepository;
+import repository.UserRepository;
+import repository.UserStatisticRepository;
 import repository.implementation.QuestionRepositoryImpl;
 import repository.implementation.TestItemRepositoryImpl;
 import repository.implementation.UserRepositoryImpl;

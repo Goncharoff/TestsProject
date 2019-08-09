@@ -3,9 +3,9 @@ package service;
 import data.business.Question;
 import java.util.List;
 import repository.QuestionRepository;
-import repository.RepositoryFactory;
+import repository.implementation.RepositoryFactory;
 
-public class QuestionService {
+class QuestionService {
   private QuestionRepository questionRepository = RepositoryFactory.getQuestionRepository();
 
   public List<Question> getQuestionAnAnswersByTestItemId(int id) {

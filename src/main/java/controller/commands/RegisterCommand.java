@@ -8,7 +8,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import javax.servlet.ServletException;
 import service.ServiceFactory;
 import service.UserService;
-import utils.JsonMappingException;
+import error.JsonMappingException;
 
 /**
  * Command for register user.

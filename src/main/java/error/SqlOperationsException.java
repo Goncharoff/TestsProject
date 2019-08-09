@@ -1,4 +1,4 @@
-package utils;
+package error;
 
 public class SqlOperationsException extends RuntimeException {
 

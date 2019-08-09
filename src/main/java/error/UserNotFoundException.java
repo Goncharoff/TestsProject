@@ -1,4 +1,4 @@
-package utils;
+package error;
 
 public class UserNotFoundException extends RuntimeException {
 

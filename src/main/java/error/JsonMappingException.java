@@ -1,4 +1,4 @@
-package utils;
+package error;
 
 public class JsonMappingException extends RuntimeException {
     public JsonMappingException(String message) {

@@ -1,6 +1,6 @@
 package data.business;
 
-import utils.NotFoundRoleException;
+import error.NotFoundRoleException;
 
 /**
  * Roles for users.
