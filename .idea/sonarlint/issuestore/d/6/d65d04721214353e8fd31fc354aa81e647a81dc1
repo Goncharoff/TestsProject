@@ -1,7 +1,0 @@
-
-[squid:S2629‚"7Use the built-in formatting to construct this argument.(©„Ûúÿÿÿÿ8ÅÂå¹Æ-
-nsquid:S11929"KDefine a constant instead of duplicating this literal "user_email" 3 times.(£Î§üÿÿÿÿ8Â©ó¸Æ-
-esquid:S3457‚"AFormat specifiers should be used instead of string concatenation.(©„Ûúÿÿÿÿ8ÅÂå¹Æ-
-ksquid:S1192;"MDefine a constant instead of duplicating this literal "user_surname" 3 times.(¸…±Ù8Â©ó¸Æ-
-_squid:S11928"HDefine a constant instead of duplicating this literal "user_id" 4 times.(šş·¨
-hsquid:S1192:"JDefine a constant instead of duplicating this literal "user_name" 3 times.(çÃÅ«8Â©ó¸Æ-

@@ -19,10 +19,6 @@ public class ConnectionPool {
 
   private static BasicDataSource ds = new BasicDataSource();
 
-
-  /**
-   * Get instance of connection pool.
-   */
   private static class DataSourceHolder {
     private static final ConnectionPool INSTANCE = new ConnectionPool();
   }
