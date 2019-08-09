@@ -9,10 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * Iterates filters and executes filter do chain.
+ */
 public class FilterChainImpl implements FilterChain {
   private Iterator<Filter> filters;
 
-  public FilterChainImpl(Filter... filters) {
+  protected FilterChainImpl(Filter... filters) {
     this.filters = Arrays.asList(filters).iterator();
   }
 

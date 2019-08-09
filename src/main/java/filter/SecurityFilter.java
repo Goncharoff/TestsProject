@@ -15,38 +15,50 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Filter for authentication.
+ */
 @WebFilter("/*")
-public class SecurityFilter implements Filter {
+public class SecurityFilter extends BaseFilter implements Filter {
     private static final String COMMAND_REGISTER = "command=Register";
     private static final String COMMAND_LOGIN = "command=Login";
     private static final String LOGIN_PAGE_URL = "/login";
     private static final String REGISTRATION_PAGE_URL = "/registration";
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private OnIntercept callback;
 
-    public SecurityFilter() {
+    protected SecurityFilter() {
     }
 
-    public SecurityFilter(OnIntercept callback) {
+    protected SecurityFilter(OnIntercept callback) {
         this.callback = callback;
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
 
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        if (checkValidAuthentificationUrls(req, resp)) {
+            resp.sendRedirect(LOGIN_PAGE_URL);
+        } else {
+            chain.doFilter(request, response);
+        }
+    }
+
+    /**
+     * Checks urls for valid status to access by undefined user.
+     *
+     * @param httpServletRequest current request
+     * @param httpServletResponse current response
+     * @return
+     */
+    //TODO this is kinda cringe, should be refactored
+    private boolean checkValidAuthentificationUrls(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         HttpSession session = httpServletRequest.getSession(false);
         String queryCommand = httpServletRequest.getQueryString();
-
 
         boolean notLogedin = session == null || session.getAttribute("userId") == null;
         boolean isRegisterCommand = queryCommand != null && queryCommand.equals(COMMAND_REGISTER);
@@ -54,17 +66,7 @@ public class SecurityFilter implements Filter {
         boolean isLoginPage = httpServletRequest.getRequestURI().equals(LOGIN_PAGE_URL);
         boolean isRegistrationPage = httpServletRequest.getRequestURI().equals(REGISTRATION_PAGE_URL);
 
-        if (notLogedin && !isLoginPage && !isLoginCommand && !isRegisterCommand && !isRegistrationPage) {
-
-            httpServletResponse.sendRedirect(LOGIN_PAGE_URL);
-
-        } else {
-            chain.doFilter(request, response);
-        }
+        return notLogedin && !isLoginPage && !isLoginCommand && !isRegisterCommand && !isRegistrationPage;
     }
 
-    @Override
-    public void destroy() {
-
-    }
 }
