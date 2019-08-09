@@ -1,7 +1,7 @@
 package controller.commands;
 
 import data.business.TestItem;
-import data.responses.ResponseWrapper;
+import data.response.ResponseWrapper;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ public class TestsMetaCommand extends FrontCommand {
 
     @Override
     public void process() throws ServletException, IOException {
-        List<TestItem> testItemList = testItemService.getAllTestItemsWithPagination();
+        List<TestItem> testItemList = testItemService.getAllTestItems();
         new ResponseWrapper<>(testItemList, response, 200);
     }
 }

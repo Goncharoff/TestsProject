@@ -1,10 +1,10 @@
 package controller.commands;
 
-import data.responses.ResponseWrapper;
+import data.response.ResponseWrapper;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import repository.QuestionRepository;
-import repository.RepositoryFactory;
+import repository.implementation.RepositoryFactory;
 import service.QuestionService;
 import service.ServiceFactory;
 

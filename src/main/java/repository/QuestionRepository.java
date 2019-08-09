@@ -6,6 +6,6 @@ import java.util.Set;
 
 public interface QuestionRepository {
 
-  Set<Question> getQuestionsByTestItemId(long id);
+  List<Question> getQuestionsByTestItemId(long id);
 
 }
