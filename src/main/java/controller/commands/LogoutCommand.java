@@ -7,6 +7,6 @@ public class LogoutCommand extends FrontCommand {
     @Override
     public void process() throws ServletException, IOException {
         request.getSession().invalidate();
-        response.sendRedirect("login");
+        redirect("login");
     }
 }

@@ -2,6 +2,8 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1, shtink-to-fir = no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
