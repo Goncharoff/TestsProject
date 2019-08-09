@@ -3,7 +3,6 @@ package controller.commands;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import data.response.RequestWrapper;
 import filter.FilterManager;
 import filter.OnIntercept;
 import java.io.BufferedReader;

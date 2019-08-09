@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Object to map in json for response for admin and all user statistic.
+ */
 public class AdminInfoResponse implements Serializable {
     private static final long serialVersionUID = 2423278599414419987L;
     private final User adminUser;

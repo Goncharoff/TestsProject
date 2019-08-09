@@ -8,6 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Response wrapper. Gets entity and converts it to json.
+ *
+ * @param <T> Class to convert in json.
+ */
+//TODO add builder for response
 public class ResponseWrapper<T> {
     private static final int SUCCESS_CODE = 200;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
