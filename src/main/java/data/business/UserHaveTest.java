@@ -1,8 +1,11 @@
 package data.business;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserHaveTest {
+public class UserHaveTest implements Serializable {
+
+  private static final long serialVersionUID = -5356190852010447794L;
   private int userHaveTestId;
   private int userId;
   private int testId;

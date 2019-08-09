@@ -1,8 +1,10 @@
 package data.business;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Answer {
+public class Answer implements Serializable {
+  private static final long serialVersionUID = 2991744696751696716L;
   private int id;
   private int questionId;
   private String answer;
