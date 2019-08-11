@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Filter for authentication.
  */
-@WebFilter("/*")
+//@WebFilter("/*")
 public class SecurityFilter extends BaseFilter implements Filter {
     private static final String COMMAND_REGISTER = "command=Register";
     private static final String COMMAND_LOGIN = "command=Login";

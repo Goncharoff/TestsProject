@@ -69,7 +69,7 @@
         font-style: normal;
         font-weight: normal;
         font-size: 18px;
-        line-height: 21px;
+        line-height: 21px;  
         color: #CBCBCB;
         padding: 0 2.5em 0 0.5em;
     }
