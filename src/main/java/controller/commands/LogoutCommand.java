@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
  * Logout from session command.
  */
 public class LogoutCommand extends FrontCommand {
-    private static final String LOGIN_JSP = "login";
+    private static final String LOGIN_JSP = "/login";
 
     /**
      * Logout user from session and redirect to login page.
@@ -17,6 +17,6 @@ public class LogoutCommand extends FrontCommand {
     @Override
     public void process() throws ServletException, IOException {
         request.getSession().invalidate();
-        response.sendRedirect(LOGIN_JSP);
+        response.sendRedirect(request.getContextPath() + LOGIN_JSP);
     }
 }
