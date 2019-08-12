@@ -6,7 +6,6 @@ import java.util.List;
 import repository.implementation.RepositoryFactory;
 import repository.UserStatisticRepository;
 
-//TODO custom exception
 public class UserStatisticService {
     private UserStatisticRepository userStatisticRepository = RepositoryFactory.getUserStatisticRepository();
 
