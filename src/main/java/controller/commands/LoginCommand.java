@@ -35,9 +35,10 @@ public class LoginCommand extends FrontCommand {
 
         User user = userService.checkAndGetUser(inputUser.getUserEmail(), inputUser.getUserPassword());
         session.setAttribute("userId", user.getId());
-        String redirectUrl = user.getUserRole() == Role.ADMIN ? "/admin_info" : "/user_info";
+        String redirectUrl =  user.getUserRole() == Role.ADMIN ? "/admin_info" : "/user_info";
 
         new ResponseWrapper<>(new RedirectResponse(request.getContextPath() + redirectUrl), response);
+
     }
 
 }

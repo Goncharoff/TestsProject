@@ -4,17 +4,15 @@
 
 <head>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- <link rel="stylesheet" href="../styles/register_style.css" />  -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/register_style.css" />
-    <jsp:include page="/styles/register_style.css" />
+    <c:url value="/resources/styles/register_style.css" var="registerStyle" />
+    <link type="text/css" rel="stylesheet" href="${registerStyle}" />
 </head>
 
 <body>
-    <c:out value="${request.contextPath}" />
-    
+   
 
     <div id="container-main" class="container">
-        <form method="POST" action="/?command=Register" id="registration-form" enctype='application/json'
+        <form method="POST" action="app/?command=Register" id="registration-form" enctype='application/json'
             class="container form">
             <h2 id="login-text" class="container form-item" color: #000000>Register</h3>
                 <input id="user-name" class="container form-item" type="text" placeholder="Name" name="userName"
@@ -25,30 +23,28 @@
                     class="input-data" required>
                 <input id="password-text" class="container form-item" type="password" placeholder="password"
                     name="userPassword" class="input-data" required>
-                <input id="repeated-password" class="container form-item" type="Repeat password" placeholder="password"
+                <input id="repeated-password" class="container form-item" type="password" placeholder="repeat password"
                     name="repeatedPassword" class="container input-data" required>
 
                 <button id="submit" class="form-item">Register</button>
         </form>
+            <a href='<c:url value = "/login"/>'>Already have account?</a>
     </div>
 
 </body>
-
-<script type="text/javascript">
+  
+    <script type="text/javascript">
 
     $("#registration-form").submit(function (e) {
         event.preventDefault(event);
         var post_url = $(this).attr("action");
         var request_method = $(this).attr("method");
-
         var userInfo = {
-            "userName": $("#user-name").val(),
-            "userSurname": $("#user-surname").val(),
             "userEmail": $("#email-text").val(),
-            "userPassword": $("#password-text").val()
+            "userPassword": $("#password-text").val(),
+            "userName": $("#user-name").val(),
+            "userSurname": $("#user-surname").val()
         }
-
-        console.debug(userInfo);
 
         $.ajax({
             url: post_url,
@@ -58,11 +54,12 @@
             mimeType: 'application/json',
             success: function (data) {
                 window.location.replace(data.redirect);
+            } ,
+            error: function() {
+                alert("Wrong input paramters repeat please");
             }
         })
     });
-
-
 </script>
 
 </html>

@@ -176,6 +176,31 @@ public class UserRepositoryImpl implements UserRepository {
         return Optional.ofNullable(resultUser);
     }
 
+    @Override
+    public boolean checkIfUserWithSuchEmailExist(String email) {
+
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UserQueries.SELECT_USER_EMAIL_BY_EMAIL.getQUERY());
+             ResultSet rs = getPSForUserEmail(preparedStatement, email).executeQuery()) {
+
+            rs.next();
+
+            Optional<String> userEmail = Optional.ofNullable(rs.getString("user_email"));
+
+            return userEmail.isPresent();
+
+        } catch (SQLException ex) {
+            logger.error("Error during checking user existing email");
+            return false;
+        }
+
+    }
+
+
+    private PreparedStatement getPSForUserEmail(PreparedStatement preparedStatement, String email) throws SQLException {
+        preparedStatement.setString(1, email);
+        return preparedStatement;
+    }
 
     private PreparedStatement getPSForUserStatistic(PreparedStatement preparedStatement, long id) throws SQLException {
         preparedStatement.setLong(1, id);
@@ -201,7 +226,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
 
     private static class PasswordEncoder {
-        private final static Logger logger = LoggerFactory.getLogger(PasswordEncoder.class);
+        private static final Logger logger = LoggerFactory.getLogger(PasswordEncoder.class);
 
         static String generatePasswordHash(String password) {
             int iterations = 1000;

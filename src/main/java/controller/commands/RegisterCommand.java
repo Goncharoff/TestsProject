@@ -1,11 +1,15 @@
 package controller.commands;
 
 import data.business.User;
+import data.response.ErrorResponse;
 import data.response.RedirectResponse;
 import data.response.ResponseWrapper;
+import error.UserAlreadyExist;
 import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.validation.Validator;
 import service.ServiceFactory;
 import service.UserService;
 import error.JsonMappingException;
@@ -26,16 +30,22 @@ public class RegisterCommand extends FrontCommand {
      */
     @Override
     public void process() throws ServletException, IOException {
+
         User inputUser = convertRequestToJsonObject(User.class).orElseThrow(
                 () -> new JsonMappingException("Can't map user input params to such json")
         );
+
+
+        userService.validateUserParams(inputUser);
+
         try {
             userService.registerUser(inputUser);
-
-            new ResponseWrapper<>(new RedirectResponse(request.getContextPath() + "/user_info"), response);
-        } catch (SQLIntegrityConstraintViolationException ex) {
-            logger.error("User already exist");
+        } catch (UserAlreadyExist ex) {
+            new ResponseWrapper<>(new ErrorResponse(ex.getMessage()), response, 422);
         }
+
+        new ResponseWrapper<>(new RedirectResponse(request.getContextPath() + "/user_info"), response);
+
     }
 
 }
