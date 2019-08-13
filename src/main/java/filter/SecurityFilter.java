@@ -1,6 +1,9 @@
 package filter;
 
 
+import controller.commands.FrontCommand;
+import controller.commands.LoginCommand;
+import controller.commands.LogoutCommand;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,12 +21,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Filter for authentication.
  */
-//@WebFilter("/*")
+@WebFilter(servletNames = {"/admin/*", "/user/*"})
 public class SecurityFilter extends BaseFilter implements Filter {
     private static final String COMMAND_REGISTER = "command=Register";
     private static final String COMMAND_LOGIN = "command=Login";
     private static final String LOGIN_PAGE_URL = "/login";
     private static final String REGISTRATION_PAGE_URL = "/registration";
+    private static final Logger logger = LoggerFactory.getLogger(SecurityFilter.class);
 
     private OnIntercept callback;
 
@@ -34,39 +38,56 @@ public class SecurityFilter extends BaseFilter implements Filter {
         this.callback = callback;
     }
 
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        super.init(filterConfig);
+    }
 
+    /**
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        if (checkValidAuthentificationUrls(req, resp)) {
-            resp.sendRedirect(LOGIN_PAGE_URL);
+        logger.info( req.getQueryString() + " current query");
+        logger.info(checkValidAuthenticationUrls(req) + " - current");
+        if (checkValidAuthenticationUrls(req)) {
+            logger.info("In redirect");
+            LogoutCommand logout = new LogoutCommand();
+            logout.init(resp, req);
+            logout.process();
         } else {
+            logger.info("In process");
             chain.doFilter(request, response);
         }
+
     }
 
     /**
      * Checks urls for valid status to access by undefined user.
      *
      * @param httpServletRequest current request
-     * @param httpServletResponse current response
-     * @return
+     * @return true is user authenticated other - false
      */
     //TODO this is kinda cringe, should be refactored
-    private boolean checkValidAuthentificationUrls(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private boolean checkValidAuthenticationUrls(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession(false);
-        String queryCommand = httpServletRequest.getQueryString();
 
-        boolean notLogedin = session == null || session.getAttribute("userId") == null;
-        boolean isRegisterCommand = queryCommand != null && queryCommand.equals(COMMAND_REGISTER);
-        boolean isLoginCommand = queryCommand != null && queryCommand.equals(COMMAND_LOGIN);
-        boolean isLoginPage = httpServletRequest.getRequestURI().equals(LOGIN_PAGE_URL);
-        boolean isRegistrationPage = httpServletRequest.getRequestURI().equals(REGISTRATION_PAGE_URL);
+        boolean haveSession = session == null || session.getAttribute("userId") == null;
 
-        return notLogedin && !isLoginPage && !isLoginCommand && !isRegisterCommand && !isRegistrationPage;
+
+        return haveSession;
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+    }
 }

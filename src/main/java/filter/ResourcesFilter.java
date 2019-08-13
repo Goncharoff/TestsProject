@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 
 @WebFilter("/*")
 public class ResourcesFilter extends BaseFilter {
@@ -17,19 +16,24 @@ public class ResourcesFilter extends BaseFilter {
         super.init(filterConfig);
     }
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        String path = req.getRequestURI().substring(req.getContextPath().length());
+//    @Override
+  //  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+//        HttpServletRequest req = (HttpServletRequest) servletRequest;
+//        String path = req.getRequestURI().substring(req.getContextPath().length());
+//
+//        if (path.startsWith("/resources/")) {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//        } else {
+//            servletRequest.getRequestDispatcher(path).forward(servletRequest, servletResponse);
+//        }
+    //}
 
-        if (path.startsWith("/resources/")) {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
             filterChain.doFilter(servletRequest, servletResponse);
-        } else {
-            servletRequest.getRequestDispatcher( path).forward(servletRequest, servletResponse);
-        }
     }
 
-    @Override
+        @Override
     public void destroy() {
         super.destroy();
     }

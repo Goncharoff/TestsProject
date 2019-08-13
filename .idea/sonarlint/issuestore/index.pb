@@ -2,8 +2,6 @@
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-F
-src/main/java/App.java,6\7\67512e2f04487cca15d6699055f74a51de1a9eb4
 Z
 *src/main/java/service/TestItemService.java,4\a\4a2e5d4a03040c594f3b3a5a850355c477ff94c6
 e

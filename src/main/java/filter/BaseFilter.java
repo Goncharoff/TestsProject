@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Base filter for implementing Base Filter Strategy
  */
 public abstract class BaseFilter implements Filter {
-    private static final Logger log = LoggerFactory.getLogger(BaseFilter.class);
+    protected static final Logger log = LoggerFactory.getLogger(BaseFilter.class);
 
     private FilterConfig filterConfig;
 

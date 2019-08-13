@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebInitParam;
 
 
 /**
- * Filter for encoding. Sets page encoding, or if not defined - UTF-8.
+ * Filter for encoding. Sets page encoding, or if not defined sets UTF-8.
  */
 @WebFilter(servletNames = {"/*"}, initParams = {@WebInitParam(name = "encoding", value = "UTF-8")})
 public class EncodingFilter extends BaseFilter {
