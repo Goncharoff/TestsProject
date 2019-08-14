@@ -14,4 +14,7 @@ public interface UserRepository {
   List<User> selectAllUsersWithStatistic();
 
   Optional<User> selectUserById(long id);
+
+  boolean checkIfUserWithSuchEmailExist(String email);
+
 }

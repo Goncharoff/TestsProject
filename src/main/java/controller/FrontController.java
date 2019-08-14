@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Implementation of front controller pattern;
  *
  */
-@WebServlet("/")
+@WebServlet("/app/*")
 public class FrontController extends HttpServlet {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

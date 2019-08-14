@@ -19,7 +19,6 @@ public class FilterManager {
                                HttpServletResponse response, OnIntercept callback) throws IOException, ServletException {
 
         FilterChain filterChain = new FilterChainImpl(
-                new EncodingFilter(),
                 new SecurityFilter(callback)
         );
 

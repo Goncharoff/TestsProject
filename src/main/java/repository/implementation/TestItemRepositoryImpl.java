@@ -77,6 +77,7 @@ public class TestItemRepositoryImpl implements TestItemRepository {
                 .setId(rs.getInt("test_item_id"))
                 .setTheme(rs.getString("theme"))
                 .setName(rs.getString("name"))
+                .setDuration(rs.getLong("duration"))
                 .setLanguage(new Language(rs.getInt("language_id"), rs.getString("language_name")))
                 .setDesctiption(rs.getString("description"))
                 .build();

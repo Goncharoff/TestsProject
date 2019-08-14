@@ -26,7 +26,9 @@ public enum UserQueries {
             " ON users.user_id = user_statistic.user_id"),
 
     SELECT_USER_BY_ID("SELECT user_id, user_email, user_name, " +
-            " user_surname FROM users WHERE user_id = ? ");
+            " user_surname FROM users WHERE user_id = ? "),
+
+    SELECT_USER_EMAIL_BY_EMAIL("SELECT user_email FROM users WHERE user_email = ?");
 
     private String QUERY;
 

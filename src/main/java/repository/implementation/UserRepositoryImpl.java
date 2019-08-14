@@ -95,17 +95,21 @@ public class UserRepositoryImpl implements UserRepository {
 
             while (rs.next()) {
                 long userId = rs.getLong("user_id");
+                long statisticId = rs.getLong("user_statistic_id");
 
                 userBuilder.setId(userId)
                         .setUserEmail(rs.getString("user_email"))
                         .setUserName(rs.getString("user_name"))
                         .setUserSurname(rs.getString("user_surname"));
 
-                UserStatistic statistic = statisticResultMap.get(userId);
+
+                UserStatistic statistic = statisticResultMap.get(statisticId);
 
                 if (statistic == null) {
+
+
                     UserStatistic userStatistic = new UserStatistic.builder()
-                            .setId(rs.getLong("user_statistic_id"))
+                            .setId(statisticId)
                             .setTestName(rs.getString("test_name"))
                             .setPassedAnswers(rs.getInt("all_questions_passed"))
                             .setCorrectAnswers(rs.getInt("correct_answered"))
@@ -113,7 +117,8 @@ public class UserRepositoryImpl implements UserRepository {
                             .setUserId(rs.getInt("user_id"))
                             .build();
 
-                    statisticResultMap.put(id, userStatistic);
+
+                    statisticResultMap.put(statisticId, userStatistic);
                 }
 
             }
@@ -176,6 +181,31 @@ public class UserRepositoryImpl implements UserRepository {
         return Optional.ofNullable(resultUser);
     }
 
+    @Override
+    public boolean checkIfUserWithSuchEmailExist(String email) {
+
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UserQueries.SELECT_USER_EMAIL_BY_EMAIL.getQUERY());
+             ResultSet rs = getPSForUserEmail(preparedStatement, email).executeQuery()) {
+
+            rs.next();
+
+            Optional<String> userEmail = Optional.ofNullable(rs.getString("user_email"));
+
+            return userEmail.isPresent();
+
+        } catch (SQLException ex) {
+            logger.error("Error during checking user existing email");
+            return false;
+        }
+
+    }
+
+
+    private PreparedStatement getPSForUserEmail(PreparedStatement preparedStatement, String email) throws SQLException {
+        preparedStatement.setString(1, email);
+        return preparedStatement;
+    }
 
     private PreparedStatement getPSForUserStatistic(PreparedStatement preparedStatement, long id) throws SQLException {
         preparedStatement.setLong(1, id);
@@ -201,7 +231,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
 
     private static class PasswordEncoder {
-        private final static Logger logger = LoggerFactory.getLogger(PasswordEncoder.class);
+        private static final Logger logger = LoggerFactory.getLogger(PasswordEncoder.class);
 
         static String generatePasswordHash(String password) {
             int iterations = 1000;
