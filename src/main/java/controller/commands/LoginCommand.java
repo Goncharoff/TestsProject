@@ -38,6 +38,7 @@ public class LoginCommand extends FrontCommand {
         String redirectUrl = user.getUserRole() == Role.ADMIN ? "/admin_info" : "/user_info";
 
         new ResponseWrapper<>(new RedirectResponse(request.getContextPath() + redirectUrl), response);
+
     }
 
 }

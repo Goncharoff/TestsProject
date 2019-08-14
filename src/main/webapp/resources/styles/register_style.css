@@ -1,0 +1,45 @@
+.container {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-item {
+    margin-bottom: 12px;
+    padding: 12px 24px;
+    width: 300px;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    border: 1px solid #C4C4C4;
+}
+
+.form-item:first-child {
+    color: #000;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    border: 0px;
+    padding: 0px 0px;
+}
+
+.form-item:last-child {
+    margin-bottom: 0;
+    width: 175px;
+    position: center;
+    color: #fff;
+    background-color: #000;
+    margin: 0 55;
+    padding: 10px 55px;
+}
+
+input:focus {
+    border: 2px solid #2CB3FE;
+}

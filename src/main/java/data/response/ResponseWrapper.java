@@ -39,10 +39,10 @@ public class ResponseWrapper<T> {
 
     private void settingResponse() {
         httpServletResponse.setStatus(statusCode);
-        try {
-            PrintWriter out = httpServletResponse.getWriter();
+        try (PrintWriter out = httpServletResponse.getWriter();){
             httpServletResponse.setContentType(contentType);
             out.print(mapper.writeValueAsString(inputModel));
+            out.flush();
         } catch (IOException e) {
             logger.error("Error on writing response", e);
         }
