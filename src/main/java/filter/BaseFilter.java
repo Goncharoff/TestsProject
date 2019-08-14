@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base filter for implementing Base Filter Strategy
+ * Logs if filter is init and destroyed.
  */
 public abstract class BaseFilter implements Filter {
     protected static final Logger log = LoggerFactory.getLogger(BaseFilter.class);

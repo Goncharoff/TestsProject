@@ -27,8 +27,6 @@ public class LoginCommand extends FrontCommand {
      */
     @Override
     public void process() throws ServletException, IOException {
-        super.process();
-
         HttpSession session = request.getSession(true);
 
         User inputUser = convertRequestToJsonObject(User.class).orElseThrow(

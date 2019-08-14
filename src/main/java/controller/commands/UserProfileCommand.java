@@ -32,9 +32,10 @@ public class UserProfileCommand extends FrontCommand {
                     new ErrorResponse("Can not find user with such id"),
                     response,
                     404);
+        } else {
+            User userStatistics = userService.selectUserWithStatisticById(userId);
+            new ResponseWrapper<>(userStatistics, response, 200);
         }
 
-        User userStatistics = userService.selectUserWithStatisticById(userId);
-        new ResponseWrapper<>(userStatistics, response, 200);
     }
 }

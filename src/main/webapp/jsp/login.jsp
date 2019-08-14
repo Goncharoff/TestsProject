@@ -9,6 +9,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <c:url value="/resources/styles/register_style.css" var="registerStyle" />
     <link type="text/css" rel="stylesheet" href="${registerStyle}" />
+    <%-- <link type="text/css" rel="stylesheet" href="/resources/styles/register_style.css" />  --%>
 </head>
 
 <body>

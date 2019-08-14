@@ -95,17 +95,21 @@ public class UserRepositoryImpl implements UserRepository {
 
             while (rs.next()) {
                 long userId = rs.getLong("user_id");
+                long statisticId = rs.getLong("user_statistic_id");
 
                 userBuilder.setId(userId)
                         .setUserEmail(rs.getString("user_email"))
                         .setUserName(rs.getString("user_name"))
                         .setUserSurname(rs.getString("user_surname"));
 
-                UserStatistic statistic = statisticResultMap.get(userId);
+
+                UserStatistic statistic = statisticResultMap.get(statisticId);
 
                 if (statistic == null) {
+
+
                     UserStatistic userStatistic = new UserStatistic.builder()
-                            .setId(rs.getLong("user_statistic_id"))
+                            .setId(statisticId)
                             .setTestName(rs.getString("test_name"))
                             .setPassedAnswers(rs.getInt("all_questions_passed"))
                             .setCorrectAnswers(rs.getInt("correct_answered"))
@@ -113,7 +117,8 @@ public class UserRepositoryImpl implements UserRepository {
                             .setUserId(rs.getInt("user_id"))
                             .build();
 
-                    statisticResultMap.put(id, userStatistic);
+
+                    statisticResultMap.put(statisticId, userStatistic);
                 }
 
             }

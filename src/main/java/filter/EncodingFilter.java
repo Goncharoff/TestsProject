@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebInitParam;
 @WebFilter(servletNames = {"/*"}, initParams = {@WebInitParam(name = "encoding", value = "UTF-8")})
 public class EncodingFilter extends BaseFilter {
     private String encoding;
+    private static final String UTF_8 = "UTF-8";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,7 +30,7 @@ public class EncodingFilter extends BaseFilter {
             throws IOException, ServletException {
 
         String enc = Optional.ofNullable(request.getParameter("encoding"))
-                .orElse("UTF-8");
+                .orElse(UTF_8);
 
 
         response.setCharacterEncoding(enc);
