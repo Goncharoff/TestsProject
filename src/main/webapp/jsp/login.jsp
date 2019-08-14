@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 
 <head>
@@ -5,86 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale = 1, shtink-to-fir = no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <c:url value="/resources/styles/register_style.css" var="registerStyle" />
+    <link type="text/css" rel="stylesheet" href="${registerStyle}" />
+    <%-- <link type="text/css" rel="stylesheet" href="/resources/styles/register_style.css" />  --%>
 </head>
 
-<style>
-    #login-text {
-        position: absolute;
-        width: 74px;
-        height: 52px;
-        left: calc(50% - 74px/2);
-        top: calc(45% - 52px/2 - 117px);
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 36px;
-        line-height: 42px;
-    }
-
-    #email-text {
-        position: absolute;
-        width: 340px;
-        height: 42px;
-        left: calc(50% - 340px/2);
-        top: calc(50% - 42px/2 - 44px);
-        border: 1px solid #C4C4C4;
-        box-sizing: border-box;
-        border-radius: 10px;
-    }
-
-    #password-text {
-        position: absolute;
-        width: 340px;
-        height: 43px;
-        left: calc(50% - 340px/2);
-        top: calc(50% - 43px/2 + 21.5px);
-        border: 1px solid #C4C4C4;
-        box-sizing: border-box;
-        border-radius: 10px;
-    }
-
-    #submit {
-        position: absolute;
-        width: 176px;
-        height: 43px;
-        left: calc(50% - 176px/2);
-        top: calc(50% - 43px/2 + 109.5px);
-        background: #000000;
-        border-radius: 10px;
-        color: #FFFFFF;
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 21px;
-    }
-
-    .input-data {
-        position: absolute;
-        width: 94px;
-        height: 19px;
-        left: calc(50% - 94px/2 - 109px);
-        top: calc(50% - 19px/2 - 45.5px);
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 21px;
-        color: #CBCBCB;
-        padding: 0 2.5em 0 0.5em;
-    }
-</style>
-
 <body>
-    <div id="container">
-        <form method="POST" action="/?command=Login" id="login-form" enctype='application/json'>
+
+    <div id="container" class = "container">
+        <form method="POST" action="app/?command=Login" id="login-form" class = "container form-item" enctype='application/json'>
             <h3 id="login-text" class="text-center text-white pt-5" color: #000000>Login</h3>
-            <input id="email-text" type="email" placeholder="E-mail" name="userEmail" class="input-data" required>
-            <input id="password-text" type="password" placeholder="password" name="userPassword" class="input-data"
+            <input id="email-text" type="email" placeholder="E-mail" name="userEmail" class = "container form-item" required>
+            <input id="password-text" type="password" placeholder="password" name="userPassword" class = "container form-item"
                 required>
-            <button id="submit">Login</button>
+            <button id="submit" class = "form-item">Login</button>
         </form>
-        <a href="/registration">Registration</a>
+        <a href='<c:url value = "/registration"/>'>Don't have account? Register!</a>
     </div>
 
 </body>

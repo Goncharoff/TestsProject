@@ -14,6 +14,8 @@ public class TestsMetaCommand extends FrontCommand {
 
     @Override
     public void process() throws ServletException, IOException {
+        super.process();
+
         List<TestItem> testItemList = testItemService.getAllTestItems();
         new ResponseWrapper<>(testItemList, response, 200);
     }

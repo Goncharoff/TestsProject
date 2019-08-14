@@ -11,7 +11,6 @@ import java.util.function.Predicate;
  * @param <T> Placeholder for an object.
  */
 
-//TODO use in Commands to validate input.
 public class Validator<T> {
     /**
      * Object that is validated

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public abstract class FrontCommand implements OnIntercept {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final static String JSP_PATH_PATTERN = "/jsp/%s.jsp";
+    private static final  String JSP_PATH_PATTERN = "/jsp/%s.jsp";
     protected ServletContext context;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
@@ -72,15 +72,12 @@ public abstract class FrontCommand implements OnIntercept {
 
     /**
      * Redirecting from current page;
-     * If filters doesn't processed then doesn't do actions.
      *
      * @param target - url to go redirect
      * @throws ServletException
      * @throws IOException
      */
     void redirect(String target) throws ServletException, IOException {
-
-
         logger.info("Redirecting from {} to ({})", request.getContextPath(), target);
         response.sendRedirect(context.getContextPath() + target);
     }

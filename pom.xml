@@ -22,8 +22,11 @@
         <mysql.connector.version>8.0.16</mysql.connector.version>
         <log4j.version>2.12.0</log4j.version>
         <servlets.version>3.0.1</servlets.version>
+        <servlets.version>4.0.0</servlets.version>
         <jackson.version>2.9.8</jackson.version>
         <jstl.version>1.2</jstl.version>
+        <jsp.version>2.3.1</jsp.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
     <dependencies>
@@ -31,7 +34,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -78,21 +81,11 @@
             <version>${jackson.version}</version>
         </dependency>
 
-
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <version>${tomcat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-logging-juli</artifactId>
-            <version>${tomcat.version}</version>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${jsp.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -105,13 +98,12 @@
 
     <build>
         <finalName>TestsProject</finalName>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <pluginManagement>
             <plugins>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
-                <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.0.2</version>
