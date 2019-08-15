@@ -6,25 +6,32 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).hide();
+             
+                $.getJSON("app/?command=TestsMeta", function (tests) {
 
-            $.getJSON("/?command=TestsMeta", function (tests) {
                 $.each(tests, function (inx, test) {
-                    $("#row_div").append('<div class = "column" >' +
-                        "<div id = " + test.testItemId + ' class = "card">' +
-                        "<h3>" + test.name + "</h3>" +
-                        "<p>" + test.theme + "</p>" +
-                        "<p>" + test.description + "</p>" +
-                        '<form action="/?command=TestSession">' +
-                        '<input type="hidden" name="command" value="TestSession" />' +
-                        '<button id = "test-item" name = "test" type="submit" value = ' + test.testItemId + '> Start </button> ' +
-                        '</form>')
+                    var name = ' <h3 id = "testName" class = "name">' + test.name + '</h3>';
+                    var lang = '<p id = "lang">' + 'Lang: ' + test.languageId + '</p>';
+                    var duration = '<p id = "duration">' + 'Duration: ' + test.duration + '</p>';
+                    var testDescription = '<p id = "testDescr" class = "descr">' + test.description + '</p>';
+                    var butn = '<footer><button id="testItemId" name="test" type="submit" class = "start-button"> Start </button></footer>';
+                    var container = '<div id = "testContainer" class = "tests-container test">' + name + lang + duration + testDescription + butn + '</div>';
+                        
+                    $("#test-items").prepend(container);
                 })
+                
                 $(document).hide();
             
             })
         })
     </script>
-
+    <script type = "text/javascript">
+        var pageCounter = 0;
+        var paginationParams = {limit: pageCounter, offset: 3};
+        function processPagination() {
+            $('#test-items').empty();
+        }
+    </script>
     <jsp:include page="/WEB-INF/header.jsp" />
 
 
@@ -39,7 +46,7 @@
         flex-flow:wrap;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
+        flex-direction: column;
         margin-top: 125px;
         border-color:black;        
     }
@@ -47,32 +54,27 @@
     .test {
           border: 1px solid black;
           margin-left: 100px;    
+          box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
+          border-radius: 13px;  
+          display: flex;
+          flex: 1 1 auto;  
+          flex-direction: column;
+          padding: 1rem;  
           width: 550px;
-          height:250px;
-          border-radius: 13px;
-          box-shadow: 3px 3px gray, -1em 0 .4em gray;         
+          margin-top: 20px;
     }
 
-    .time {
-        border: 1px solid black;
-        width: 250px;
-        height:250px;
-        border-radius: 13px;
-        box-shadow: 3px 3px gray, -1em 0 .4em gray;
-        align-content: center;
-        justify-content: center;
-        text-align: center;
-    }
 
     .name {
         margin-left: 200px;
     }
 
 .descr {
-    
+     flex: 1 1 auto;
+     margin-bottom: 1.25rem;
 }
 
-.start {
+.start-button {
         font-family: Roboto;
         font-style: normal;
         font-weight: normal;
@@ -81,30 +83,29 @@
         background: #2CB3FE;
         border-radius: 10px;
         color: white;
-        margin-left: 25px;
-        margin-block-start: 50px;
 }
-    
-.opts {
-    flex-direction: row;
+  .pagination {
+  display: inline-block;
 }
-  
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
 </style>
 
 <body>
 
     <div id = "test-items" class = "tests-containter">
-        <div class = "tests-container test"> 
-            <h3 class = "name"> test item name 23 </h3>
-            <p class = "opts"> Lang: ENG </p>
-            <p class = "opts"> Duration: 25 m </p>
-            <p class = "descr"> Descriptuion for test 23 Descriptuion for test 23 Descriptuion for test 23Descriptuion for test 23 
-                Descriptuion for test 23 Descriptuion for test 23 Descriptuion for test 23Descriptuion for test 23 Descriptuion for test 23 Descriptuion for test 23 Descriptuion for test 23Descriptuion for test 23
-             </p>
-            <button id="test-item" name="test" type="submit" class = "start"> Start </button>
-        </div>
+      
+      <a class = "btnPrev" href = "#" class = "btn"> < Prevous </a>
+      <a class = "btnNext" href = "#" class = "btn"> Next > </a>  
     </div>
 
+  
 
 </body>
 

@@ -1,3 +1,3 @@
 
-jsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(±ÀÝæ
-Xsquid:S1075"ARefactor your code to get this URI from a customizable parameter.(±ÀÝæ
+¯%squid:RedundantThrowsDeclarationCheckP"wRemove the declaration of thrown exception 'javax.servlet.ServletException', as it cannot be thrown from method's body.(¹™‹½8×‰ä„É-
+^squid:S1075"ARefactor your code to get this URI from a customizable parameter.(†£Ê38Ø‰ä„É-

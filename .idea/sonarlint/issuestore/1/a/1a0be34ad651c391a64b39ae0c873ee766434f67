@@ -1,2 +1,5 @@
 
-Csquid:S1068",Remove this unused "USER_JSP" private field.(›İ‰º
+Jsquid:S1068",Remove this unused "USER_JSP" private field.(›İ‰º8Œ•ä„É-
+nsquid:UselessImportCheck"CRemove this unused import 'javax.servlet.http.HttpServletResponse'.(Á¨ïë8Œ•ä„É-
+ksquid:UselessImportCheck";Remove this unused import 'javax.xml.validation.Validator'.(¦¸òúûÿÿÿÿ8Œ•ä„É-
+ysquid:UselessImportCheck	"NRemove this unused import 'java.sql.SQLIntegrityConstraintViolationException'.(¤¡†8Œ•ä„É-

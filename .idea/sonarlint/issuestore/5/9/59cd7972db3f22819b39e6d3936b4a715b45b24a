@@ -1,4 +1,4 @@
 
-Csquid:S1068",Remove this unused "encoding" private field.(ð·ýî
-nsquid:S1450"WRemove the "encoding" field and declare it as a local variable in the relevant methods.(ð·ýî
-˜squid:S1186)"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‚“¶î
+lsquid:S1450"WRemove the "encoding" field and declare it as a local variable in the relevant methods.(ð·ýî
+Asquid:S1068",Remove this unused "encoding" private field.(ð·ýî
+˜squid:S1186*"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‚“¶î
