@@ -49,17 +49,17 @@ public class SecurityFilter extends BaseFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse resp = (HttpServletResponse) response;
-//        HttpSession session = req.getSession(false);
-//        String loginUri = req.getContextPath() + "/login";
-//        boolean loggedIn = session != null && session.getAttribute("userId") != null;
-//
-//        if (loggedIn) {
-//            chain.doFilter(request, response);
-//        } else {
-//            new ResponseWrapper<>(new RedirectResponse(loginUri), resp, 401);
-//        }
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+        HttpSession session = req.getSession(false);
+        String loginUri = req.getContextPath() + "/login";
+        boolean loggedIn = session != null && session.getAttribute("userId") != null;
+
+        if (loggedIn) {
+            chain.doFilter(request, response);
+        } else {
+            new ResponseWrapper<>(new RedirectResponse(loginUri), resp, 401);
+        }
 
     }
 
