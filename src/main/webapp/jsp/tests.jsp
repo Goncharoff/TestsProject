@@ -14,7 +14,7 @@
                 var paginationOptions = { limit: 3, offset: offsetParam };
                 
                 $.getJSON("app/?command=TestsMeta", paginationOptions, function (tests) {
-                    maxPage = tests.totalNumber % 3;
+                    maxPage = tests.totalNumber / 3;
                     
                     $.each(tests.testItems, function (inx, test) {
                         var name = ' <h3 id = "testName" class = "name">' + test.name + '</h3>';

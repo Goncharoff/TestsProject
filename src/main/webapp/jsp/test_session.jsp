@@ -6,6 +6,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
        
        <script type="text/javascript">           
+        
             function startTimer(duration, display) {
                 var timer = duration, minutes, seconds;
                  
@@ -22,18 +23,21 @@
                             timer = duration;
                         }
                 }, 1000);
-        }
-
-            window.onload = function () {
+            }
+            
+             window.onload = function () {
                 var minutes = 60 * 5;
                 var display = document.querySelector('#time');
                 startTimer(minutes, display);
-                myQuestions = getTest();
-                alert(myQuestions);
-                startSession();
-            };
-
+                getTest();
+             };
+ 
         </script>
+
+
+  
+</head>
+
 
     <script type = "text/javascript">
         
@@ -47,25 +51,21 @@
                 sParameterName = sURLVariables[i].split('=');
 
                 if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
             }
         };
 
         function getTest() {    
-            $(document).ready(function () {
-                var pathId = { "testId" : getUrlParameter('test')};
-                
-                $.getJSON('<c:url value = "/app/?command=TestSession"/>', pathId, function (test) {
-                        alert(test);
-                        return test;        
-                    })
-                })
-        }
-    </script>
+               
 
-    <script type = "text/javascript">
-      
+            var pathId = { "testId" : getUrlParameter('test')};
+
+                $.getJSON('<c:url value = "/app/?command=TestSession"/>', pathId, function (test) {
+                        startSession(test);
+                });
+                   
+        }
 
         function startSession(myQuestions) {
 
@@ -83,20 +83,21 @@
                     // ...add an HTML radio button
                     answers.push(
                     `<label>
-                        <input type="radio" name="question${questionNumber}" value="${letter}">
-                        tata23 :
-                        tatat232
+                        <input type="radio" name="question` + questionNumber + `" value="` + letter + `">
+                        ` + letter + `:
+                        ` + currentQuestion.answers[letter].answer +`
                     </label>`
                     );
                 }
+                               
 
                 // add this question and its answers to the output
                 output.push(
-                    `<div class="slide">
-                    <div class="question"> tata </div>
-                    <div class="answers"> tata2 </div>
-                    </div>`
-                );
+                        `<div class="slide">
+                            <div class="question">` + currentQuestion.text +  `</div>
+                            <div class="answers">` + answers.join("") + `</div>
+                        </div>`
+                    );
                 });
 
                 // finally combine our output list into one string of HTML and put it on the page
@@ -104,35 +105,48 @@
             }
 
             function showResults() {
-                // gather answer containers from our quiz
-                const answerContainers = quizContainer.querySelectorAll(".answers");
+                    var resultJsonAnswers = [];
+                    var testItemsResult = [];
+                    // gather answer containers from our quiz
+                    const answerContainers = quizContainer.querySelectorAll(".answers");            
+                    
+                    // keep track of user's answers
+                    let numCorrect = 0;
 
-                // keep track of user's answers
-                let numCorrect = 0;
+                    // for each question...
+                    myQuestions.forEach((currentQuestion, questionNumber) => {
+                        // find selected answer
+                        const answerContainer = answerContainers[questionNumber];   
+                        const selector = 'input[name=question' + questionNumber + ']:checked';
+                        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
-                // for each question...
-                myQuestions.forEach((currentQuestion, questionNumber) => {
-                // find selected answer
-                const answerContainer = answerContainers[questionNumber];
-                const selector = `input[name=question${questionNumber}]:checked`;
-                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+                        testItemsResult = [...testItemsResult, {
+                                            "testId" : currentQuestion.id, 
+                                            "answerId": currentQuestion.answers[userAnswer].id
+                                        }];
 
-                // if answer is correct
-                if (userAnswer === currentQuestion.correctAnswer) {
-                    // add to the number of correct answers
-                    numCorrect++;
 
-                    // color the answers green
-                    answerContainers[questionNumber].style.color = "lightgreen";
-                } else {
-                    // if answer is wrong or blank
-                    // color the answers red
-                    answerContainers[questionNumber].style.color = "red";
-                }
+
+                        // if answer is correct
+                        if (userAnswer === currentQuestion.correctAnswer) {
+                            // add to the number of correct answers
+                            numCorrect++;
+
+                            // color the answers green
+                            answerContainers[questionNumber].style.color = "lightgreen";
+                        } else {
+                            // if answer is wrong or blank
+                            // color the answers red
+                            answerContainers[questionNumber].style.color = "red";
+                        }
                 });
-
-                // show number of correct answers out of total
-                resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+                 
+                  
+                resultJsonAnswers = {testItemsResult, 
+                        "testItemId" : getUrlParameter('test')};
+                 postDataToCheck(resultJsonAnswers);
+               // show number of correct answers out of total
+                resultsContainer.innerHTML = numCorrect + ` out of ` + myQuestions.length;
             }
 
             function showSlide(n) {
@@ -182,10 +196,27 @@
             previousButton.addEventListener("click", showPreviousSlide);
             nextButton.addEventListener("click", showNextSlide);
         };
-</script>
 
-  
-</head>
+        function postDataToCheck(testResult) {
+                var post_url = '<c:url value = "/app/?command=CheckTest"/>';          
+
+                $.ajax({
+                    url: post_url,
+                    type: "POST",
+                    data: JSON.stringify(testResult),
+                    contentType: 'application/json',
+                    mimeType: 'application/json',
+                    success: function (data) {
+                       console.log(data)
+                    }
+                })
+
+            // $.post( '<c:url value = "/app/?command=CheckTest"/>',  JSON.stringify(testResult), function(data) {
+            // console.log(data);
+        //});
+    }
+
+    </script>
 
 <style type="text/css">
  p {
