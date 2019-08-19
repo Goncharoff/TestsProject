@@ -5,6 +5,7 @@ import data.business.Answer;
 import data.business.Question;
 import data.business.TypeQuestion;
 import data.quires.QuestionQueries;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.QuestionRepository;
@@ -27,8 +30,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Override
     public List<Question> getQuestionsByTestItemId(long id) {
-        List<Question> questions = new ArrayList<>();
-        Map<Integer, Answer> answersMap = new HashMap<>();
+        List<Answer> answers = new ArrayList<>();
+        Map<Integer, Question> questionMap = new HashMap<>();
         Question.builder questionBuilder = new Question.builder();
 
         try (Connection connection = ConnectionPool.getConnection();
@@ -38,54 +41,60 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             while (rs.next()) {
                 int questionId = rs.getInt("question_id");
 
-                buildQuestionItem(rs, questionBuilder, questionId);
-                addAnswersToMap(rs, answersMap, questionId);
-
-                questions.add(questionBuilder.build());
+                buildAnswer(rs, answers, questionId);
+                buildQuestionItem(rs, questionBuilder, questionMap, questionId);
             }
 
-            mapAnswersToQuestions(questions, answersMap);
 
         } catch (SQLException e) {
             logger.error("error during getting questions and answers by id ", e);
         }
 
 
-        return questions;
+        mapAnswersToQuestions(questionMap, answers);
+
+        return new ArrayList<>(questionMap.values());
     }
 
 
-    private void addAnswersToMap(ResultSet rs, Map<Integer, Answer> answersMap, int questionId) throws SQLException {
-        int answerId = rs.getInt("answer_id");
-        Answer answer = answersMap.get(answerId);
+    private void buildQuestionItem(ResultSet rs, Question.builder questionBuilder,
+                                   Map<Integer, Question> questionMap, int questionId) throws SQLException {
 
-        if (answer == null) {
-            answer = new Answer(answerId, questionId, rs.getString("answer"),
-                    rs.getBoolean("isCorrect"),
-                    rs.getString("error_descr"));
+        if (questionMap.get(questionId) == null) {
+            questionBuilder.setId(questionId)
+                    .setText(rs.getString("question_text"))
+                    .setUrl(rs.getString("question_image_url"))
+                    .setTypeQuestion(new TypeQuestion(rs.getInt("type_id"), rs.getString("type_name")))
+                    .setTypeId(rs.getInt("type_id"));
 
-            answersMap.put(answer.getId(), answer);
+            questionMap.put(questionId, questionBuilder.build());
         }
     }
 
-    private void buildQuestionItem(ResultSet rs, Question.builder questionBuilder, int questionId) throws SQLException {
+    private void buildAnswer(ResultSet rs, List<Answer> answers, int questionId) throws SQLException {
+        int answerId = rs.getInt("answer_id");
+        Answer answer = new Answer(
+                answerId,
+                questionId,
+                rs.getString("answer"),
+                rs.getBoolean("isCorrect"),
+                rs.getString("error_descr")
+        );
 
-        questionBuilder.setId(questionId)
-                .setText(rs.getString("question_text"))
-                .setUrl(rs.getString("question_image_url"))
-                .setTypeQuestion(new TypeQuestion(rs.getInt("type_id"), rs.getString("type_name")))
-                .setTypeId(rs.getInt("type_id"));
+        answers.add(answer);
     }
 
-    private void mapAnswersToQuestions(List<Question> questions, Map<Integer, Answer> answersMap) {
-        questions.forEach(it ->
-                it.getAnswers().addAll(
-                        answersMap.values()
-                                .stream()
-                                .filter(ans -> it.getId() == ans.getQuestionId())
-                                .collect(Collectors.toList())
-                )
+    private void mapAnswersToQuestions(Map<Integer, Question> questionMap, List<Answer> answers) {
+        logger.info(questionMap.values() + " questins");
+        logger.info(answers + " answers");
+
+        questionMap.values().forEach(
+                question -> question.setAnswers(
+                        answers.stream()
+                                .filter(ans -> ans.getQuestionId() == question.getId())
+                                .collect(Collectors.toList()))
         );
+
     }
 
     private PreparedStatement getPSForQuestionByItemId(PreparedStatement preparedStatement, long id) throws SQLException {

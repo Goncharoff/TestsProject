@@ -10,7 +10,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
  */
 public class ConnectionPool {
   private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
-  private static final String DB_URL = "jdbc:mysql://localhost:3306/tester_app_prod_db?serverTimezone=UTC";
+  private static final String DB_URL = "jdbc:mysql://localhost:3306/tester_app_prod_db?serverTimezone=UTC&characterEncoding=utf-8";
   private static final String DB_USER = "admin";
   private static final String DB_PASSWORD = "pa44word";
   private static final int CONN_MIN_POOL_SIZE = 5;
@@ -37,7 +37,6 @@ public class ConnectionPool {
     ds.setMaxIdle(CONN_MAX_POOL_SIZE);
     ds.setMaxOpenPreparedStatements(MAX_NUMBER_OF_PREPARED_STATEMENTS);
     ds.setDriverClassName(DRIVER_CLASS_NAME);
-
   }
 
   public static ConnectionPool getInstance() {

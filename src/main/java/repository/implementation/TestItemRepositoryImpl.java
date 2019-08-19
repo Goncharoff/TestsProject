@@ -4,12 +4,14 @@ import data.ConnectionPool;
 import data.business.Language;
 import data.business.TestItem;
 import data.quires.TestItemQueries;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.TestItemRepository;
@@ -71,6 +73,21 @@ public class TestItemRepositoryImpl implements TestItemRepository {
         return resultSet;
     }
 
+    @Override
+    public long getNumberOfTestItems() {
+        try (Connection connection = ConnectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(TestItemQueries.SELECT_NUMBER_OF_ITEMS.getQUERY());
+             ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+
+            return rs.getLong("cnt");
+        } catch (SQLException ex) {
+            logger.error("Can not get number of items from test items table", ex);
+        }
+
+        return 0;
+    }
+
     private TestItem buildTestItemFromRs(ResultSet rs) throws SQLException {
 
         return new TestItem.builder()
@@ -78,7 +95,7 @@ public class TestItemRepositoryImpl implements TestItemRepository {
                 .setTheme(rs.getString("theme"))
                 .setName(rs.getString("name"))
                 .setDuration(rs.getLong("duration"))
-                .setLanguage(new Language(rs.getInt("language_id"), rs.getString("language_name")))
+                .setLanguage(Language.provideLanguageByCode(rs.getInt("language_id")))
                 .setDesctiption(rs.getString("description"))
                 .build();
     }
