@@ -1,67 +1,110 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+
 <html>
 
 <head>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript">
-        (function () {
-            const myQuestions = [
-                {
-                    question: "Who is the strongest?",
-                    answers: {
-                        a: "Superman",
-                        b: "The Terminator",
-                        c: "Waluigi, obviously"
-                    },
-                    correctAnswer: "c"
-                },
-                {
-                    question: "What is the best site ever created?",
-                    answers: {
-                        a: "SitePoint",
-                        b: "Simple Steps Code",
-                        c: "Trick question; they're both the best"
-                    },
-                    correctAnswer: "c"
-                },
-                {
-                    question: "Where is Waldo really?",
-                    answers: {
-                        a: "Antarctica",
-                        b: "Exploring the Pacific Ocean",
-                        c: "Sitting in a tree",
-                        d: "Minding his own business, so stop asking"
-                    },
-                    correctAnswer: "d"
+        <jsp:include page="/WEB-INF/header.jsp" />
+
+       <script type="text/javascript">           
+            
+             window.onload = function () {
+                getTest();
+             };
+ 
+        </script>
+
+
+  
+</head>
+
+
+    <script type = "text/javascript">
+        var submited = 0;
+
+        function startTimer(duration, display) {
+                var timer = duration, minutes, seconds;
+                 
+                var interval = setInterval(function () {
+                        minutes = parseInt(timer / 60, 10);
+                        seconds = parseInt(timer % 60, 10);
+
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                        display.textContent = minutes + ":" + seconds;
+
+                        if (--timer < 0) {
+                            clearInterval(interval);
+                        }
+
+                }, 1000);
+        }
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+              var sPageURL = window.location.search.substring(1),
+              sURLVariables = sPageURL.split('&'),
+              sParameterName,
+             i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
-            ];
+            }
+        };
+
+        function getTest() {    
+               
+
+            var pathId = { "testId" : getUrlParameter('test')};
+
+                $.getJSON('<c:url value = "/app/?command=TestSession"/>', pathId, function (test) {
+                        startSession(test);
+                }).fail(function($jqXHR) {
+                if($jqXHR.status == 401) {
+                    var data = JSON.parse($jqXHR.responseText);
+                    window.location.replace(data.redirect);
+                } else {
+                    console.log(jqXHR.status);
+                }
+            });
+                   
+        }
+
+        function startSession(myQuestions) {
 
             function buildQuiz() {
                 // we'll need a place to store the HTML output
-                const output = [];
+                var output = [];
 
                 // for each question...
                 myQuestions.forEach((currentQuestion, questionNumber) => {
-                    // we'll want to store the list of answer choices
-                    const answers = [];
+                // we'll want to store the list of answer choices
+                var answers = [];
 
-                    // and for each available answer...
-                    for (letter in currentQuestion.answers) {
-                        // ...add an HTML radio button
-                        answers.push(
-                            `<label>
-             <input type="radio" name="question${questionNumber}" value="${letter}">
-              ${letter} :
-              ${currentQuestion.answers[letter]}
-           </label>`
-                        );
-                    }
+                // and for each available answer...
+                for (letter in currentQuestion.answers) {
+                    // ...add an HTML radio button
+                    answers.push(
+                    `<label>
+                        <input type="radio" name="question` + questionNumber + `" value="` + letter + `">
+                        ` + letter + `:
+                        ` + currentQuestion.answers[letter].answer +`
+                    </label>`
+                    );
+                }
+                               
 
-                    // add this question and its answers to the output
-                    output.push(
+                // add this question and its answers to the output
+                output.push(
                         `<div class="slide">
-           <div class="question"> ${currentQuestion.question} </div>
-           <div class="answers"> ${answers.join("")} </div>
-         </div>`
+                            <div class="question">` + currentQuestion.text +  `</div>
+                            <div class="answers">` + answers.join("") + `</div>
+                        </div>`
                     );
                 });
 
@@ -70,51 +113,71 @@
             }
 
             function showResults() {
-                // gather answer containers from our quiz
-                const answerContainers = quizContainer.querySelectorAll(".answers");
+                    var resultJsonAnswers = {};
 
-                // keep track of user's answers
-                let numCorrect = 0;
+                    // gather answer containers from our quiz
+                    const answerContainers = quizContainer.querySelectorAll(".answers");            
+                    
+                    // keep track of user's answers
+                    let numCorrect = 0;
 
-                // for each question...
-                myQuestions.forEach((currentQuestion, questionNumber) => {
-                    // find selected answer
-                    const answerContainer = answerContainers[questionNumber];
-                    const selector = `input[name=question${questionNumber}]:checked`;
-                    const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+                    // for each question...
+                    myQuestions.forEach((currentQuestion, questionNumber) => {
+                        // find selected answer
+                        const answerContainer = answerContainers[questionNumber];   
+                        const selector = 'input[name=question' + questionNumber + ']:checked';
+                        var userAnswer = (answerContainer.querySelector(selector) || {}).value;
+                        if(typeof userAnswer === 'undefined') userAnswer = -1;
+                        
+                            // if answer is correct
+                        if ((userAnswer != -1) && currentQuestion.answers[userAnswer].correct) {
+                                // add to the number of correct answers
+                                numCorrect++;
+                                                                                                                                                                                                                                                
+                                // color the answers green
+                                answerContainers[questionNumber].style.color = "lightgreen";
 
-                    // if answer is correct
-                    if (userAnswer === currentQuestion.correctAnswer) {
-                        // add to the number of correct answers
-                        numCorrect++;
+                            } else {
+                                // if answer is wrong or blank
+                                // color the answers red
+                                answerContainers[questionNumber].style.color = "red";
+                            }
+                            
 
-                        // color the answers green
-                        answerContainers[questionNumber].style.color = "lightgreen";
-                    } else {
-                        // if answer is wrong or blank
-                        // color the answers red
-                        answerContainers[questionNumber].style.color = "red";
-                    }
-                });
-
-                // show number of correct answers out of total
-                resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+                    });
+                    
+                                                       
+                    // show number of correct answers out of total
+                    resultsContainer.innerHTML = numCorrect + ` out of ` + myQuestions.length;
+                    submited = -1;
+                    submitButton.style.display = "none";
+                    
+                    resultJsonAnswers = {
+                        "testId" : getUrlParameter('test'),
+                        "corrects": numCorrect,
+                        "total": myQuestions.length 
+                    };
+                    
+                    postDataToCheck(resultJsonAnswers);
             }
 
             function showSlide(n) {
                 slides[currentSlide].classList.remove("active-slide");
                 slides[n].classList.add("active-slide");
                 currentSlide = n;
-
+                
                 if (currentSlide === 0) {
                     previousButton.style.display = "none";
                 } else {
                     previousButton.style.display = "inline-block";
                 }
-
+                
                 if (currentSlide === slides.length - 1) {
                     nextButton.style.display = "none";
-                    submitButton.style.display = "inline-block";
+                    if(submited != -1) {
+                        submitButton.style.display = "inline-block";
+                    }
+
                 } else {
                     nextButton.style.display = "inline-block";
                     submitButton.style.display = "none";
@@ -147,95 +210,122 @@
             submitButton.addEventListener("click", showResults);
             previousButton.addEventListener("click", showPreviousSlide);
             nextButton.addEventListener("click", showNextSlide);
-        })();
+        };
+
+        function postDataToCheck(testResult) {
+                var post_url = '<c:url value = "/app/?command=CheckTest"/>';          
+
+                $.ajax({
+                    url: post_url,
+                    type: "POST",
+                    data: JSON.stringify(testResult),
+                    contentType: 'application/json',
+                    mimeType: 'application/json',
+                    success: function (data) {
+                       console.log(data)
+                    },
+                    error: function(jqXHR,error, errorThrown) {  
+                        if(jqXHR.status && jqXHR.status==401){
+                            var data = JSON.parse($jqXHR.responseText);
+                            window.location.replace(data.redirect);
+                        } 
+                    }
+            })
+    }
+
     </script>
-</head>
 
-<style type="text/css">
-    @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+    <style type="text/css">
+        p {
+            text-align: center;
+            font-size: 60px;
+            margin-top: 0px;
+        }
 
-    body {
-        font-size: 20px;
-        font-family: 'Work Sans', sans-serif;
-        color: #333;
-        font-weight: 300;
-        text-align: center;
-        background-color: #f8f6f0;
-    }
+        body{
+            font-size: 20px;
+            font-family: 'Work Sans', sans-serif;
+            color: #333;
+            font-weight: 300;
+            text-align: center;
+            background-color: #f8f6f0;
+        }
+        h1{
+            font-weight: 300;
+            margin: 0px;
+            padding: 10px;
+            font-size: 20px;
+            background-color: #444;
+            color: #fff;
+        }
+        .question{
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .answers {
+            margin-bottom: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+        .answers label{
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 22px;
+            background-color: #279;
+            color: #fff;
+            border: 0px;
+            border-radius: 3px;
+            padding: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover{
+            background-color: #38a;
+        }
 
-    h1 {
-        font-weight: 300;
-        margin: 0px;
-        padding: 10px;
-        font-size: 20px;
-        background-color: #444;
-        color: #fff;
-    }
-
-    .question {
-        font-size: 30px;
-        margin-bottom: 10px;
-    }
-
-    .answers {
-        margin-bottom: 20px;
-        text-align: left;
-        display: inline-block;
-    }
-
-    .answers label {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    button {
-        font-family: 'Work Sans', sans-serif;
-        font-size: 22px;
-        background-color: #279;
-        color: #fff;
-        border: 0px;
-        border-radius: 3px;
-        padding: 20px;
-        cursor: pointer;
-        margin-bottom: 20px;
-    }
-
-    button:hover {
-        background-color: #38a;
-    }
-
-    .slide {
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        width: 100%;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 0.5s;
-    }
-
-    .active-slide {
-        opacity: 1;
-        z-index: 2;
-    }
-
-    .quiz-container {
-        position: relative;
-        height: 200px;
-        margin-top: 40px;
-    }
-</style>
+        .slide{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .active-slide{
+            opacity: 1;
+            z-index: 2;
+        }
+        .quiz-container{
+            position: relative;
+            height: 200px;
+            margin-top: 40px;
+        }
+    </style>
 
 <body>
+    
+    <!-- <div>
+        <div>
+             <span id="time">01:00</span>
+        </div>
+    </div> -->
 
-    <h1>Quiz on Important Facts</h1>
     <div class="quiz-container">
-        <div id="quiz"></div>
+            <div id="quiz"></div>
     </div>
+    
     <button id="previous">Previous Question</button>
     <button id="next">Next Question</button>
     <button id="submit">Submit Quiz</button>
-    <div id="results"></div>
+    
+    <div id="results">
+        
+    </div>
+
 </body>
 
 </html>

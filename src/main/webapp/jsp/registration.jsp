@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
 
@@ -23,8 +24,6 @@
                     class="input-data" required>
                 <input id="password-text" class="container form-item" type="password" placeholder="password"
                     name="userPassword" class="input-data" required>
-                <input id="repeated-password" class="container form-item" type="password" placeholder="repeat password"
-                    name="repeatedPassword" class="container input-data" required>
 
                 <button id="submit" class="form-item">Register</button>
         </form>

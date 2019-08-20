@@ -5,7 +5,11 @@ public enum TestItemQueries {
 
   SELECT_ALL_TEST_ITEMS("SELECT test_item_id, name, description, theme, duration, language_name,  test_items.language_id" +
           " FROM test_items " +
-          " LEFT JOIN languages ON  test_items.language_id = languages.language_id ");
+          " LEFT JOIN languages ON  test_items.language_id = languages.language_id "),
+
+  SELECT_NUMBER_OF_ITEMS("SELECT COUNT(*) as cnt FROM test_items"),
+
+  SELECT_TEST_NAME_BY_ID("SELECT name FROM test_items WHERE test_item_id = ?");
 
   private String QUERY;
 

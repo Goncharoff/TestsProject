@@ -214,6 +214,460 @@ VALUES
 '1');
 SELECT * FROM tester_app_prod_db.questions;
 
+ALTER TABLE `tester_app_prod_db`.`test_items`
+DROP COLUMN `user_have_test_id`;
+
+INSERT INTO `tester_app_prod_db`.`test_items`
+(
+`language_id`,
+`name`,
+`description`,
+`theme`,
+`duration`)
+VALUES
+(1,
+'Advanced java',
+'Test for checking advanced topics in java.',
+'Java',
+15);
+
+INSERT INTO `tester_app_prod_db`.`test_items` ( `language_id`, `name`, `description`, `theme`, `duration`) VALUES (1, 'Java Simple Test', 'Test which covers basics of java programm language.', 'Java', 15)
+
+INSERT INTO `tester_app_prod_db`.`test_items` ( `language_id`, `name`, `description`, `theme`, `duration`) VALUES (2, 'English language test', 'Basic english grammar and vocabruary test.', 'English language', 10)
+
+INSERT INTO `tester_app_prod_db`.`test_items` ( `language_id`, `name`, `description`, `theme`, `duration`) VALUES (2, 'Шаблоны проектирования.', 'Тест для проверки знаний о шаблонах проектирования.', 'Программирование', 10)
+
+INSERT INTO `tester_app_prod_db`.`test_items` ( `language_id`, `name`, `description`, `theme`, `duration`) VALUES (1, 'Advanced english.', 'Test for checking advancde knowladge in enlish.', 'English language', 15)
+
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(5,
+'Whole',
+true,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(5,
+'All',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(5,
+'Real',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(5,
+'Exact',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(4,
+'Same',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(4,
+'Similiar',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(4,
+'As',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(4,
+'Like',
+true,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(3,
+'Watched',
+true,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(3,
+'Looked',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(3,
+'Saw',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(3,
+'Viewed',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(2,
+'Already',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(2,
+'Till',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(2,
+'Still',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(2,
+'Yet',
+true,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(1,
+'Talking',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(1,
+'Telling',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(1,
+'Speaking',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(1,
+'Saying',
+true,
+'');
+
+ALTER TABLE questions ADD COLUMN test_items_id INT NOT NULL;
+
+UPDATE `tester_app_prod_db`.`questions` SET `test_items_id` = 2 WHERE `question_id` = 1;
+UPDATE `tester_app_prod_db`.`questions` SET `test_items_id` = 2 WHERE `question_id` = 2;
+UPDATE `tester_app_prod_db`.`questions` SET `test_items_id` = 2 WHERE `question_id` = 3;
+UPDATE `tester_app_prod_db`.`questions` SET `test_items_id` = 2 WHERE `question_id` = 4;
+UPDATE `tester_app_prod_db`.`questions` SET `test_items_id` = 2 WHERE `question_id` = 5;
+
+
+INSERT INTO `tester_app_prod_db`.`questions`
+(`question_text`,
+`question_image_url`,
+`type_id`,
+`test_items_id`)
+VALUES
+('How often do you play tennis?',
+'',
+1,
+5);
+
+INSERT INTO `tester_app_prod_db`.`questions`
+(`question_text`,
+`question_image_url`,
+`type_id`,
+`test_items_id`)
+VALUES
+('Where do you usually eat lunch?',
+'',
+1,
+5);
+
+INSERT INTO `tester_app_prod_db`.`questions`
+(`question_text`,
+`question_image_url`,
+`type_id`,
+`test_items_id`)
+VALUES
+('How long did you study last night?',
+'',
+1,
+5);
+
+INSERT INTO `tester_app_prod_db`.`questions`
+(`question_text`,
+`question_image_url`,
+`type_id`,
+`test_items_id`)
+VALUES
+('What kind of novels do you like?',
+'',
+1,
+5);
+
+INSERT INTO `tester_app_prod_db`.`questions`
+(`question_text`,
+`question_image_url`,
+`type_id`,
+`test_items_id`)
+VALUES
+('What kind of work do you do?',
+'',
+1,
+5);
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(11,
+'On Tuesday.',
+false,
+'');
+
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(12,
+'In the cafeteria.',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(12,
+'Sandwich.',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(12,
+'With Jane.',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(12,
+'At 12:00.',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(13,
+'With Bob.',
+false,
+'');
+
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(13,
+'In my room.',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(13,
+'English.',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(13,
+'For three hours.',
+true,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(14,
+'I like spy novels.',
+true,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(15,
+'I\'m a piano teacher.',
+true,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(15,
+'I work every day.',
+false,
+'');
+
+INSERT INTO `tester_app_prod_db`.`answers`
+(`question_id`,
+`answer`,
+`isCorrect`,
+`error_descr`)
+VALUES
+(15,
+'I worked for two hours.',
+false,
+'');
 
 
 

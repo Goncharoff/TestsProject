@@ -1,48 +1,33 @@
 package data.business;
 
-import java.io.Serializable;
-import java.util.Objects;
+import error.NotFoundLangException;
 
-/**
- * Database object for languages table.
- */
-public class Language implements Serializable {
-  private static final long serialVersionUID = -888435907627502633L;
-  private int id;
-  private String languageId;
+public enum Language {
+    RU(1),
+    ENG(2),
+    UKR(3);
 
-  public Language(int id, String languageId) {
-    this.id = id;
-    this.languageId = languageId;
-  }
 
-  public int getId() {
-    return id;
-  }
+    private int languageId;
 
-  public String getLanguageId() {
-    return languageId;
-  }
+    Language(int languageId) {
+        this.languageId = languageId;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Language)) return false;
-    Language language = (Language) o;
-    return getId() == language.getId() &&
-            Objects.equals(getLanguageId(), language.getLanguageId());
-  }
+    public int getLanguageId() {
+        return languageId;
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(getId(), getLanguageId());
-  }
-
-  @Override
-  public String toString() {
-    return "Language{" +
-            "id=" + id +
-            ", languageId='" + languageId + '\'' +
-            '}';
-  }
+    public static Language provideLanguageByCode(int code) {
+        switch (code) {
+            case 1:
+                return RU;
+            case 2:
+                return ENG;
+            case 3:
+                return UKR;
+            default:
+                throw new NotFoundLangException("Can not find language with code " + code);
+        }
+    }
 }

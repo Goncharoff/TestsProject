@@ -63,8 +63,6 @@ public class UserRepositoryImpl implements UserRepository {
             }
 
 
-            //new UserRole(rs.getInt("id_user_roles"), rs.getString("role")))
-
             User resultUser = new User.builder().setId(rs.getLong("user_id"))
                     .setUserEmail(rs.getString("user_email"))
                     .setUserName(rs.getString("user_name"))
@@ -196,6 +194,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         } catch (SQLException ex) {
             logger.error("Error during checking user existing email");
+            logger.error("Error: " + ex);
             return false;
         }
 
