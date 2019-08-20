@@ -13,6 +13,8 @@ public class TestSessionCommand extends FrontCommand {
 
     @Override
     public void process() throws ServletException, IOException {
+        super.process();
+
         try {
             int testId = Integer.parseInt(request.getParameter("testId"));
             new ResponseWrapper<>(questionService.getQuestionAnAnswersByTestItemId(testId), response, 200);
@@ -21,7 +23,7 @@ public class TestSessionCommand extends FrontCommand {
             new ResponseWrapper<>(
                     new ErrorResponse("Can not find test with such id"),
                     response,
-                    401);
+                    404);
         }
     }
 }

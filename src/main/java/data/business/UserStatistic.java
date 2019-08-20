@@ -36,7 +36,7 @@ public class UserStatistic implements Serializable {
     private int passedAnswers;
     private String testName;
     private Date dateRecorded;
-    private int userId;
+    private long userId;
 
     public builder setId(long id) {
       this.id = id;
@@ -63,7 +63,7 @@ public class UserStatistic implements Serializable {
       return this;
     }
 
-    public builder setUserId(int userId) {
+    public builder setUserId(long userId) {
       this.userId = userId;
       return this;
     }

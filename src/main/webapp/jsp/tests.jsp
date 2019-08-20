@@ -28,7 +28,14 @@
                     })
                     $(document).show(); 
                     paginationButtonVision();                 
-                })
+                }).fail(function($jqXHR) {
+                    if($jqXHR.status == 401) {
+                        var data = JSON.parse($jqXHR.responseText);
+                        window.location.replace(data.redirect);
+                    } else {
+                        console.log(jqXHR.status);
+                    }
+            });
 
             
 

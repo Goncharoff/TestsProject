@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.validation.Validator;
 import service.ServiceFactory;
 import service.UserService;
@@ -43,6 +44,7 @@ public class RegisterCommand extends FrontCommand {
         } catch (UserAlreadyExist ex) {
             new ResponseWrapper<>(new ErrorResponse(ex.getMessage()), response, 422);
         }
+
 
         new ResponseWrapper<>(new RedirectResponse(request.getContextPath() + "/user_info"), response);
 

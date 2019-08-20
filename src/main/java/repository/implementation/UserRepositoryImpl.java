@@ -194,6 +194,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         } catch (SQLException ex) {
             logger.error("Error during checking user existing email");
+            logger.error("Error: " + ex);
             return false;
         }
 

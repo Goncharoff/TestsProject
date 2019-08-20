@@ -1,26 +1,48 @@
 package controller.commands;
 
-import data.request.TestItemsResult;
+import data.business.UserStatistic;
+import data.request.TestResult;
+import data.response.ErrorResponse;
 import data.response.ResponseWrapper;
 import error.JsonMappingException;
-import java.io.IOException;
-import javax.servlet.ServletException;
-import service.QuestionService;
 import service.ServiceFactory;
+import service.TestItemService;
+import service.UserStatisticService;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
 
 public class CheckTestCommand extends FrontCommand {
-    private final QuestionService questionService = ServiceFactory.getQuestionService();
+    private final UserStatisticService userStatisticService = ServiceFactory.getUserStatisticService();
+    private final TestItemService testItemService = ServiceFactory.getTestItemService();
 
     @Override
     public void process() throws ServletException, IOException {
         super.process();
 
-        TestItemsResult testItemsResult = convertRequestToJsonObject(TestItemsResult.class).orElseThrow(
+        TestResult testResult = convertRequestToJsonObject(TestResult.class).orElseThrow(
                 () -> new JsonMappingException("Can not map object")
         );
 
-        logger.info(testItemsResult.getTestItemId() + " and it's result" + "\n" + testItemsResult.getTestItemsResult());
+        Long userId = (Long) request.getSession().getAttribute("userId");
 
-        new ResponseWrapper<>(testItemsResult, response, 200);
+        if (userId == null) {
+            new ResponseWrapper<>(
+                    new ErrorResponse("Can not find user with such id"),
+                    response,
+                    401);
+        } else {
+
+            UserStatistic userStatistic = new UserStatistic.builder()
+                    .setTestName(testItemService.getTestItemNameById(testResult.getTestId()))
+                    .setUserId(userId)
+                    .setCorrectAnswers(testResult.getCorrects())
+                    .setPassedAnswers(testResult.getTotal())
+                    .build();
+
+            userStatisticService.insertUserStatisticByUserId(userId, userStatistic);
+
+            new ResponseWrapper<>(userStatistic, response, 200);
+        }
     }
 }

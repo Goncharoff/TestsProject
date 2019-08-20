@@ -21,19 +21,21 @@
                 $("#name").append(user.userName).append(" " + user.userSurname);
 
                 $.each(user.userStatistics, function (i, item) {
+                    
                     $("#statisticTable")
-                        .append($('<div class="flex-table row" role="rowgroup">')
-                        .append($('<div class="flex-row first" role="cell">').text(item.testName))
-                        .append($('<div class="flex-row first" role="cell">').text(item.correctAnswers))
-                        .append($('<div class="flex-row first" role="cell">').text(item.passedAnswers))
-                        .append($('<div class="flex-row first" role="cell">').text(new Date(item.dateRecorded).toLocaleDateString("en-US")))
+                          .append($('<div class="flex-table row" role="rowgroup">')
+                          .append($('<div class="flex-row first" role="cell">').text(item.testName))
+                          .append($('<div class="flex-row first" role="cell">').text(item.correctAnswers))
+                          .append($('<div class="flex-row first" role="cell">').text(item.passedAnswers))
+                          .append($('<div class="flex-row first" role="cell">').text(new Date(item.dateRecorded).toLocaleDateString("en-US")))
                         );
+
                          totalNumberCorrect += parseInt(item.correctAnswers);
                          totalNumberOfQuestions += parseInt(item.passedAnswers);
                 });
                 
-                $("#sumInfo").text("Total number of tests: " + ( Object.keys(user).length - 1) );
-                $("#totalNumber").text("Total number of correct anwers: " + ((totalNumberCorrect/totalNumberOfQuestions)  * 100).toFixed(2));
+                $("#sumInfo").text("Total number of passed tests: " + ( Object.keys(user.userStatistics).length) );
+                $("#totalNumber").text("Total percent of successful answers  " + ((totalNumberCorrect/totalNumberOfQuestions)  * 100).toFixed(2) + " %");
                 
               
                  $("#body").show();        

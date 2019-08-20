@@ -1,34 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
 
 <head>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-       
+        <jsp:include page="/WEB-INF/header.jsp" />
+
        <script type="text/javascript">           
-        
-            function startTimer(duration, display) {
-                var timer = duration, minutes, seconds;
-                 
-                setInterval(function () {
-                        minutes = parseInt(timer / 60, 10);
-                        seconds = parseInt(timer % 60, 10);
-
-                        minutes = minutes < 10 ? "0" + minutes : minutes;
-                        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                        display.textContent = minutes + ":" + seconds;
-
-                        if (--timer < 0) {
-                            timer = duration;
-                        }
-                }, 1000);
-            }
             
              window.onload = function () {
-                var minutes = 60 * 5;
-                var display = document.querySelector('#time');
-                startTimer(minutes, display);
                 getTest();
              };
  
@@ -40,7 +21,27 @@
 
 
     <script type = "text/javascript">
-        
+        var submited = 0;
+
+        function startTimer(duration, display) {
+                var timer = duration, minutes, seconds;
+                 
+                var interval = setInterval(function () {
+                        minutes = parseInt(timer / 60, 10);
+                        seconds = parseInt(timer % 60, 10);
+
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                        display.textContent = minutes + ":" + seconds;
+
+                        if (--timer < 0) {
+                            clearInterval(interval);
+                        }
+
+                }, 1000);
+        }
+
         var getUrlParameter = function getUrlParameter(sParam) {
               var sPageURL = window.location.search.substring(1),
               sURLVariables = sPageURL.split('&'),
@@ -63,7 +64,14 @@
 
                 $.getJSON('<c:url value = "/app/?command=TestSession"/>', pathId, function (test) {
                         startSession(test);
-                });
+                }).fail(function($jqXHR) {
+                if($jqXHR.status == 401) {
+                    var data = JSON.parse($jqXHR.responseText);
+                    window.location.replace(data.redirect);
+                } else {
+                    console.log(jqXHR.status);
+                }
+            });
                    
         }
 
@@ -105,8 +113,8 @@
             }
 
             function showResults() {
-                    var resultJsonAnswers = [];
-                    var testItemsResult = [];
+                    var resultJsonAnswers = {};
+
                     // gather answer containers from our quiz
                     const answerContainers = quizContainer.querySelectorAll(".answers");            
                     
@@ -118,35 +126,39 @@
                         // find selected answer
                         const answerContainer = answerContainers[questionNumber];   
                         const selector = 'input[name=question' + questionNumber + ']:checked';
-                        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+                        var userAnswer = (answerContainer.querySelector(selector) || {}).value;
+                        if(typeof userAnswer === 'undefined') userAnswer = -1;
+                        
+                            // if answer is correct
+                        if ((userAnswer != -1) && currentQuestion.answers[userAnswer].correct) {
+                                // add to the number of correct answers
+                                numCorrect++;
+                                                                                                                                                                                                                                                
+                                // color the answers green
+                                answerContainers[questionNumber].style.color = "lightgreen";
 
-                        testItemsResult = [...testItemsResult, {
-                                            "testId" : currentQuestion.id, 
-                                            "answerId": currentQuestion.answers[userAnswer].id
-                                        }];
+                            } else {
+                                // if answer is wrong or blank
+                                // color the answers red
+                                answerContainers[questionNumber].style.color = "red";
+                            }
+                            
 
-
-
-                        // if answer is correct
-                        if (userAnswer === currentQuestion.correctAnswer) {
-                            // add to the number of correct answers
-                            numCorrect++;
-
-                            // color the answers green
-                            answerContainers[questionNumber].style.color = "lightgreen";
-                        } else {
-                            // if answer is wrong or blank
-                            // color the answers red
-                            answerContainers[questionNumber].style.color = "red";
-                        }
-                });
-                 
-                  
-                resultJsonAnswers = {testItemsResult, 
-                        "testItemId" : getUrlParameter('test')};
-                 postDataToCheck(resultJsonAnswers);
-               // show number of correct answers out of total
-                resultsContainer.innerHTML = numCorrect + ` out of ` + myQuestions.length;
+                    });
+                    
+                                                       
+                    // show number of correct answers out of total
+                    resultsContainer.innerHTML = numCorrect + ` out of ` + myQuestions.length;
+                    submited = -1;
+                    submitButton.style.display = "none";
+                    
+                    resultJsonAnswers = {
+                        "testId" : getUrlParameter('test'),
+                        "corrects": numCorrect,
+                        "total": myQuestions.length 
+                    };
+                    
+                    postDataToCheck(resultJsonAnswers);
             }
 
             function showSlide(n) {
@@ -162,7 +174,10 @@
                 
                 if (currentSlide === slides.length - 1) {
                     nextButton.style.display = "none";
-                    submitButton.style.display = "inline-block";
+                    if(submited != -1) {
+                        submitButton.style.display = "inline-block";
+                    }
+
                 } else {
                     nextButton.style.display = "inline-block";
                     submitButton.style.display = "none";
@@ -208,98 +223,96 @@
                     mimeType: 'application/json',
                     success: function (data) {
                        console.log(data)
+                    },
+                    error: function(jqXHR,error, errorThrown) {  
+                        if(jqXHR.status && jqXHR.status==401){
+                            var data = JSON.parse($jqXHR.responseText);
+                            window.location.replace(data.redirect);
+                        } 
                     }
-                })
-
-            // $.post( '<c:url value = "/app/?command=CheckTest"/>',  JSON.stringify(testResult), function(data) {
-            // console.log(data);
-        //});
+            })
     }
 
     </script>
 
-<style type="text/css">
- p {
-  text-align: center;
-  font-size: 60px;
-  margin-top: 0px;
-}
+    <style type="text/css">
+        p {
+            text-align: center;
+            font-size: 60px;
+            margin-top: 0px;
+        }
 
-body{
-    font-size: 20px;
-    font-family: 'Work Sans', sans-serif;
-    color: #333;
-  font-weight: 300;
-  text-align: center;
-  background-color: #f8f6f0;
-}
-h1{
-  font-weight: 300;
-  margin: 0px;
-  padding: 10px;
-  font-size: 20px;
-  background-color: #444;
-  color: #fff;
-}
-.question{
-  font-size: 30px;
-  margin-bottom: 10px;
-}
-.answers {
-  margin-bottom: 20px;
-  text-align: left;
-  display: inline-block;
-}
-.answers label{
-  display: block;
-  margin-bottom: 10px;
-}
-button{
-  font-family: 'Work Sans', sans-serif;
-    font-size: 22px;
-    background-color: #279;
-    color: #fff;
-    border: 0px;
-    border-radius: 3px;
-    padding: 20px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-button:hover{
-    background-color: #38a;
-}
+        body{
+            font-size: 20px;
+            font-family: 'Work Sans', sans-serif;
+            color: #333;
+            font-weight: 300;
+            text-align: center;
+            background-color: #f8f6f0;
+        }
+        h1{
+            font-weight: 300;
+            margin: 0px;
+            padding: 10px;
+            font-size: 20px;
+            background-color: #444;
+            color: #fff;
+        }
+        .question{
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .answers {
+            margin-bottom: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+        .answers label{
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 22px;
+            background-color: #279;
+            color: #fff;
+            border: 0px;
+            border-radius: 3px;
+            padding: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover{
+            background-color: #38a;
+        }
 
-
-
-
-
-.slide{
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-.active-slide{
-  opacity: 1;
-  z-index: 2;
-}
-.quiz-container{
-  position: relative;
-  height: 200px;
-  margin-top: 40px;
-}
-</style>
+        .slide{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .active-slide{
+            opacity: 1;
+            z-index: 2;
+        }
+        .quiz-container{
+            position: relative;
+            height: 200px;
+            margin-top: 40px;
+        }
+    </style>
 
 <body>
     
-    <div>
+    <!-- <div>
         <div>
-             <span id="time">05:00</span>
+             <span id="time">01:00</span>
         </div>
-    </div>
+    </div> -->
 
     <div class="quiz-container">
             <div id="quiz"></div>

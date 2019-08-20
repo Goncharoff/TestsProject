@@ -19,6 +19,10 @@ public class TestItemService {
         return testItemRepository.getPagingTestItems(offset, limit);
     }
 
+    public String getTestItemNameById(long id) {
+        return testItemRepository.getTestItemNameById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
     public TestItemsPaginationResponse getAllTestITemsWithPaginationResponse(int offset, int limit) {
         List<TestItem> testItems = testItemRepository.getPagingTestItems(offset, limit);
         long totalNumber = testItemRepository.getNumberOfTestItems();
