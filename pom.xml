@@ -25,7 +25,7 @@
         <jackson.version>2.9.10.1</jackson.version>
         <jstl.version>1.2</jstl.version>
         <jsp.version>2.3.1</jsp.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
